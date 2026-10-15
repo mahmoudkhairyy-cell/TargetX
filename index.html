@@ -124,10 +124,10 @@ main{padding:18px}
 .credit b{color:var(--ink)}
 
 /* Mascot مستر تارجت */
-.tx-mascot-btn{position:fixed;left:14px;bottom:96px;z-index:50;width:72px;height:72px;border:0;border-radius:50%;
- background:#fff;box-shadow:0 10px 26px #ff790033;padding:6px;display:flex;align-items:center;justify-content:center}
+.tx-mascot-btn{position:fixed;left:8px;bottom:84px;z-index:50;width:124px;height:150px;border:0;border-radius:50%;
+ background:transparent;box-shadow:none;padding:0;display:flex;align-items:center;justify-content:center}
 .tx-mascot-btn svg{width:100%;height:100%;animation:txFloat 3.2s ease-in-out infinite}
-.tx-panel{position:fixed;left:12px;right:12px;bottom:176px;max-width:440px;margin:auto;z-index:49;background:#fff;
+.tx-panel{position:fixed;left:12px;right:12px;bottom:236px;max-width:440px;margin:auto;z-index:49;background:#fff;
  border-radius:18px;box-shadow:0 14px 40px #24243a22;padding:16px;border-top:4px solid var(--orange)}
 .tx-panel.hidden{display:none}
 .tx-panel p{margin:0 0 10px;line-height:1.9;font-size:13px}
@@ -185,7 +185,7 @@ header{background:#ffffff;color:var(--ink);border-radius:0 0 24px 24px;box-shado
 .hero-card .eyebrow,.hero-card .hero-foot,.hero-card .big-number{color:#fff}
 .hero-card .progress{background:#ffffff26}
 .primary{background:var(--accent);box-shadow:0 8px 18px #ff790040}
-.tab.active{background:var(--soft);color:#e66b00}
+.tab.active{background:linear-gradient(135deg,#ff9d38,#ff7900);color:#fff;box-shadow:0 8px 18px #ff790044}
 .mini-progress span,.progress span{background:linear-gradient(90deg,#ffb15f,#ff7900)}
 @media (min-width:900px){
  .tabs{position:fixed !important;top:0 !important;bottom:0 !important;right:0 !important;left:auto !important;width:220px !important;height:100vh !important;background:var(--sb) !important;
@@ -194,7 +194,7 @@ header{background:#ffffff;color:var(--ink);border-radius:0 0 24px 24px;box-shado
  .tabs .tab{width:100%;display:flex !important;position:static !important;transform:none !important}
  .tab{flex-direction:row;justify-content:flex-start;gap:12px;color:#c9cbd6;padding:12px 14px;border-radius:14px;font-size:14px}
  .tab span{font-size:16px}
- .tab.active{background:var(--accent);color:#fff;box-shadow:0 8px 18px #ff790040}
+ .tab.active{background:linear-gradient(135deg,#ff9d38,#ff7900);color:#fff;box-shadow:0 8px 18px #ff790044}
  .app{margin-right:220px;max-width:none}
  .app{padding-bottom:30px}
  .tx-mascot-btn{bottom:24px;left:auto;right:24px}
@@ -217,7 +217,7 @@ header{background:#121729;color:#e8ecf7;box-shadow:0 10px 30px #0006;border-bott
 .history-row{border-color:#242f4f}
 .tx-panel{background:#121a30;color:#e8ecf7;border-top-color:#ff7900;box-shadow:0 20px 50px #000a}
 .tx-chat .tx-bot{background:#1b2544;color:#e8ecf7}
-.tx-mascot-btn{background:#121a30;box-shadow:0 0 0 1px #ff790055,0 10px 30px #ff790033}
+.tx-mascot-btn{background:transparent;box-shadow:none}
 .dash{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:6px 0 18px}
 @media (max-width:700px){.dash{grid-template-columns:1fr}}
 .dash-card{position:relative;min-height:230px;overflow:hidden;padding:18px}
@@ -234,6 +234,7 @@ header{background:#121729;color:#e8ecf7;box-shadow:0 10px 30px #0006;border-bott
 .dash-ring{width:110px;height:110px;margin:4px auto 0;display:block}
 @keyframes dashFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
 .dash-bot svg{animation:dashFloat 4s ease-in-out infinite}
+.tab small{display:block;font-size:10px;opacity:.75;font-weight:600;margin-top:1px}
 </style>
 </head>
 <body>
@@ -381,13 +382,13 @@ header{background:#121729;color:#e8ecf7;box-shadow:0 10px 30px #0006;border-bott
   <p id="txMessage"></p>
   <p class="tx-tip" id="txTip"></p>
   <div class="tx-chat" id="txChat"></div>
-  <div class="tx-askrow"><input id="txInput" placeholder="اسأل مستر تارجت..." onkeydown="if(event.key==='Enter')sendMrTarget()"><button class="btn primary" onclick="sendMrTarget()">إرسال</button></div>
+  <div class="tx-askrow"><input id="txInput" placeholder="اسأل مستر تارجت... Ask me" onkeydown="if(event.key==='Enter')sendMrTarget()"><button class="btn primary" onclick="sendMrTarget()">إرسال</button></div>
 </div>
 <nav class="tabs"><div class="tab-inner">
-  <button class="tab active" data-page="home" onclick="showPage('home')"><span>⌂</span>الرئيسية</button>
-  <button class="tab" data-page="targets" onclick="showPage('targets')"><span>🎯</span>التارجت</button>
-  <button class="tab" data-page="reports" onclick="showPage('reports')"><span>▤</span>التقارير</button>
-  <button class="tab" data-page="add" onclick="showPage('add')"><span>＋</span>إضافة</button>
+  <button class="tab active" data-page="home" onclick="showPage('home')"><span>⌂</span>الرئيسية<small>Home</small></button>
+  <button class="tab" data-page="targets" onclick="showPage('targets')"><span>🎯</span>التارجت<small>Targets</small></button>
+  <button class="tab" data-page="reports" onclick="showPage('reports')"><span>▤</span>التقارير<small>Reports</small></button>
+  <button class="tab" data-page="add" onclick="showPage('add')"><span>＋</span>سجّل<small>Add</small></button>
 </div></nav>
 <div id="toast" class="toast hidden" role="status"></div>
 </div>
@@ -601,9 +602,9 @@ function renderHome(){
  document.getElementById("todayText").textContent=
   new Date().toLocaleDateString("ar-EG",{weekday:"long",year:"numeric",month:"long",day:"numeric"});
  document.getElementById("mascotMessage").textContent=
-  pct("lines")>=100?"يا وحش! حققت تارجت الخطوط. كمّل بنفس القوة! 🏆":
-  pct("lines")>=70?"أنت قريب جدًا من هدفك! فاضل شوية وتكسر الدنيا 💪":
-  "يلا نبدأ يوم قوي! كل عملية بتفرق في نتيجتك 🍊";
+  pct("lines")>=100?"يا وحش! خلصت تارجت الخطوط. كمّل كده! 🏆":
+  pct("lines")>=70?"إنت قريب أوي من الهدف! فاضل شوية وتكسّرها 💪":
+  "يلا بينا نبدأ يومنا! كل عملية بتفرق في النتيجة 🍊";
  document.getElementById("kpiGrid").innerHTML=state.settings.kpis.map(k=>{
   const done=achieved(k.id),percent=pct(k.id);
   return `<article class="card">
@@ -747,7 +748,7 @@ function mascotSVG(st,uid){
    <filter id="${uid}glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="1.6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
   </defs>
   <ellipse cx="50" cy="117" rx="26" ry="3" fill="#000" opacity=".3"/>
-  <circle cx="50" cy="62" r="46" fill="url(#${uid}halo)"/>
+  
   <rect x="30" y="98" width="13" height="16" rx="4" fill="#4a5163"/><rect x="57" y="98" width="13" height="16" rx="4" fill="#4a5163"/>
   <path d="M26 112 Q30 106 40 107 L40 116 L24 116 Z" fill="#2a2f3d"/><path d="M74 112 Q70 106 60 107 L60 116 L76 116 Z" fill="#2a2f3d"/>
   <path d="M30 70 Q50 64 70 70 L74 98 Q50 106 26 98 Z" fill="url(#${uid}shell)" stroke="#8b93a5" stroke-width=".8"/>
@@ -823,9 +824,9 @@ function toggleMascotPanel(){
 }
 
 const INTRO_STEPS=[
- {t:"أهلاً، أنا مستر تارجت 👋",x:"أنا رفيقك في الشغل. هساعدك تتابع تارجتك كل يوم وتعرف إنت فين بالظبط.",st:"happy"},
- {t:"سجّل إنجازك في ثانية ➕",x:"كل بيعة تسجلها من زرار (تسجيل إنجاز) تحدّث الأرقام فوراً. مفيش حاجة تضيع.",st:"idle"},
- {t:"اعرف إنت على المسار ولا لأ 📊",x:"الكارت الكبير بيقولك المتوقع لحد النهارده، والمطلوب يومياً عشان توصل للهدف.",st:"concern"},
+ {t:"أهلاً يا بطل، أنا مستر تارجت 👋",x:"أنا جنبك في الشغل. هساعدك تتابع تارجتك كل يوم وتعرف إنت فين بالظبط.",st:"happy"},
+ {t:"سجّل إنجازك في ثانية ➕",x:"كل بيعة تسجلها من زرار (سجّل) بتتحدث على طول. مفيش حاجة بتضيع.",st:"idle"},
+ {t:"اعرف إنت على المسار ولا لأ 📊",x:"الكارت الكبير بيقولك المفروض توصل لفين لحد النهارده، والمطلوب كل يوم عشان توصل للهدف.",st:"concern"},
  {t:"موسوعة SR جوه إيدك 📚",x:"ابحث بالكود أو بالكلمة، وانسخ أي SR بضغطة. وأنا هفضل جنبك بنصايح في الفقاعة اللي تحت.",st:"celebrate"}
 ];
 let introIdx=0, introTimer=null;
@@ -1002,6 +1003,7 @@ function importData(event){
  };
  reader.readAsText(file);
 }
+renderMascot();
 if(!introIsSeen()) window.addEventListener("load",openIntro);
 setInterval(flyMascot,25000);
 </script>
