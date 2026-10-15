@@ -6,8 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#ff7900">
 <meta name="author" content="Mahmoud Khairy - محمود خيري">
-<meta name="description" content="تارجت إكس: أداة مستقلة لمتابعة التارجت والمبيعات">
-<title>تارجت إكس | TargetX</title>
+<meta name="description" content="مستر تارجت: أداة مستقلة لمتابعة التارجت والمبيعات">
+<title>مستر تارجت | TargetX</title>
 <style>
 :root {
   --orange:#ff7900; --orange2:#ff9d38; --ink:#22232a;
@@ -123,7 +123,7 @@ main{padding:18px}
 .credit{text-align:center;font-size:11px;color:#8a8a96;line-height:1.8;padding:18px 16px 110px}
 .credit b{color:var(--ink)}
 
-/* Mascot تارجت إكس */
+/* Mascot مستر تارجت */
 .tx-mascot-btn{position:fixed;left:14px;bottom:96px;z-index:50;width:72px;height:72px;border:0;border-radius:50%;
  background:#fff;box-shadow:0 10px 26px #ff790033;padding:6px;display:flex;align-items:center;justify-content:center}
 .tx-mascot-btn svg{width:100%;height:100%;animation:txFloat 3.2s ease-in-out infinite}
@@ -132,6 +132,15 @@ main{padding:18px}
 .tx-panel.hidden{display:none}
 .tx-panel p{margin:0 0 10px;line-height:1.9;font-size:13px}
 .tx-panel .tx-tip{font-size:12px;color:#6f6258}
+.tx-chat{max-height:160px;overflow:auto;display:flex;flex-direction:column;gap:8px;margin:6px 0 10px}
+.tx-chat .tx-bot,.tx-chat .tx-me{padding:8px 12px;border-radius:14px;font-size:13px;line-height:1.7;max-width:85%}
+.tx-chat .tx-bot{background:var(--soft);align-self:flex-start}
+.tx-chat .tx-me{background:var(--accent);color:#fff;align-self:flex-end}
+.tx-askrow{display:flex;gap:8px}
+.tx-askrow input{flex:1;border:1px solid #e3e5ec;border-radius:12px;padding:10px 12px;font:inherit}
+.tx-askrow button{padding:10px 14px}
+.tx-flying{animation:txFly 1.2s ease-in-out}
+@keyframes txFly{0%{transform:translateY(0) rotate(0)}50%{transform:translateY(-22px) rotate(-6deg)}100%{transform:translateY(0) rotate(0)}}
 .tx-panel .tx-close{position:absolute;left:10px;top:8px;border:0;background:none;font-size:18px;color:#999}
 .tx-holo{animation:txGlow 2.6s ease-in-out infinite}
 .tx-scan{animation:txScan 2.4s linear infinite}
@@ -153,6 +162,34 @@ main{padding:18px}
 @keyframes txBounce{0%,100%{transform:translateY(0)}30%{transform:translateY(-8px)}60%{transform:translateY(0)}}
 .tx-celebrate svg{animation:txBounce 1.1s ease-in-out infinite}
 @media (prefers-reduced-motion: reduce){.tx-mascot-btn svg,.tx-holo,.tx-scan,.tx-intro-mascot,.tx-celebrate svg{animation:none}}
+
+/* ===== مستر تارجت — modern theme ===== */
+:root{--sb:#1c1d26;--sb2:#262735;--accent:#ff7900;--soft:#fff4ea;--card:#ffffff;}
+body{background:#f2f3f7}
+header{background:#ffffff;color:var(--ink);border-radius:0 0 24px 24px;box-shadow:0 6px 24px #1c1d2612}
+.brand h1{color:var(--ink)} .brand p{color:#858591}
+.logo{background:var(--accent);color:#fff;border-radius:12px;width:40px;height:40px;display:flex;align-items:center;justify-content:center;font-weight:900}
+.welcome .mascot{display:none}
+.welcome h2{color:var(--ink)}
+.card{border-radius:22px;border:1px solid #eceef4;box-shadow:0 4px 18px #1c1d2608}
+.hero-card{background:linear-gradient(135deg,#1c1d26,#2b2d3d);color:#fff;border:0}
+.hero-card .eyebrow,.hero-card .hero-foot,.hero-card .big-number{color:#fff}
+.hero-card .progress{background:#ffffff26}
+.primary{background:var(--accent);box-shadow:0 8px 18px #ff790040}
+.tab.active{background:var(--soft);color:#e66b00}
+.mini-progress span,.progress span{background:linear-gradient(90deg,#ffb15f,#ff7900)}
+@media (min-width:900px){
+ .tabs{position:fixed !important;top:0 !important;bottom:0 !important;right:0 !important;left:auto !important;width:220px !important;height:100vh !important;background:var(--sb) !important;
+  border-radius:0;padding:26px 14px;box-shadow:none;display:flex;flex-direction:column}
+ .tabs .tab-inner{display:flex !important;flex-direction:column !important;gap:6px;align-items:stretch;width:100%;height:auto;position:static !important}
+ .tabs .tab{width:100%;display:flex !important;position:static !important;transform:none !important}
+ .tab{flex-direction:row;justify-content:flex-start;gap:12px;color:#c9cbd6;padding:12px 14px;border-radius:14px;font-size:14px}
+ .tab span{font-size:16px}
+ .tab.active{background:var(--accent);color:#fff;box-shadow:0 8px 18px #ff790040}
+ .app{margin-right:220px;max-width:none}
+ .app{padding-bottom:30px}
+ .tx-mascot-btn{bottom:24px}
+}
 </style>
 </head>
 <body>
@@ -160,15 +197,15 @@ main{padding:18px}
 <header>
   <div class="top">
     <div class="brand">
-      <div class="logo">🍊</div>
-      <div><h1>تارجت إكس · TargetX</h1><p>YOUR SALES. YOUR SUCCESS.</p></div>
+      <div class="logo">MT</div>
+      <div><h1>مستر تارجت · TargetX</h1><p>YOUR SALES. YOUR SUCCESS.</p></div>
     </div>
     <button class="avatar" onclick="editEmployee()">👤 الموظف</button>
   </div>
   <div class="welcome">
     <div><h2>أهلاً يا بطل 👋<br><span id="employeeGreeting">جاهز تكسر التارجت؟</span></h2>
       <p id="todayText"></p></div>
-    <div class="mascot" aria-label="تارجت إكس">🍊</div>
+    <div class="mascot" aria-label="مستر تارجت">🍊</div>
   </div>
 </header>
 
@@ -208,7 +245,7 @@ main{padding:18px}
   <div class="grid" id="kpiGrid"></div>
 
   <div class="mascot-box"><div class="mascot-small">🍊</div>
-    <div><strong>تارجت إكس بيقولك 💬</strong><p id="mascotMessage">يلا نبدأ يوم قوي! كل عملية بتفرق في نتيجتك.</p></div>
+    <div><strong>مستر تارجت بيقولك 💬</strong><p id="mascotMessage">يلا نبدأ يوم قوي! كل عملية بتفرق في نتيجتك.</p></div>
   </div>
 
   <div class="section-head"><div><h3>آخر الإنجازات</h3>
@@ -245,7 +282,7 @@ main{padding:18px}
       <input id="monthName" type="month"></div>
     <div id="targetFields"></div>
     <button class="btn primary full" onclick="saveSettings()">حفظ الإعدادات</button>
-    <button class="btn secondary full" style="margin-top:10px" onclick="openIntro()">🎓 شرح التطبيق مع تارجت إكس</button>
+    <button class="btn secondary full" style="margin-top:10px" onclick="openIntro()">🎓 شرح التطبيق مع مستر تارجت</button>
     <button class="btn secondary full" style="margin-top:10px" onclick="exportData()">تصدير نسخة احتياطية JSON</button>
     <div class="field" style="margin-top:14px"><label for="importFile">استعادة نسخة احتياطية</label>
       <input type="file" id="importFile" accept=".json,application/json" onchange="importData(event)"></div>
@@ -279,10 +316,10 @@ main{padding:18px}
 </section>
 </main>
 
-<footer class="credit">تم تطوير تارجت إكس بواسطة <b>محمود خيري</b> · Mahmoud Khairy<br>أداة مستقلة لتتبع الأداء الشخصي، وليست منتجًا رسميًا تابعًا لأورانج ولا معتمدة من الشركة.</footer>
+<footer class="credit">تم تطوير مستر تارجت بواسطة <b>محمود خيري</b> · Mahmoud Khairy<br>أداة مستقلة لتتبع الأداء الشخصي، وليست منتجًا رسميًا تابعًا لأورانج ولا معتمدة من الشركة.</footer>
 
-<button class="tx-mascot-btn" id="txMascotBtn" aria-label="تارجت إكس - اضغط عشان تسمع نصيحة" onclick="toggleMascotPanel()"></button>
-<div class="tx-intro hidden" id="txIntro" role="dialog" aria-modal="true" aria-label="شرح تارجت إكس">
+<button class="tx-mascot-btn" id="txMascotBtn" aria-label="مستر تارجت - اضغط عشان تسمع نصيحة" onclick="toggleMascotPanel()"></button>
+<div class="tx-intro hidden" id="txIntro" role="dialog" aria-modal="true" aria-label="شرح مستر تارجت">
   <div class="tx-intro-card">
     <div class="tx-intro-mascot" id="txIntroMascot"></div>
     <div class="tx-intro-bubble"><h3 id="txIntroTitle"></h3><p id="txIntroText"></p></div>
@@ -293,10 +330,12 @@ main{padding:18px}
     </div>
   </div>
 </div>
-<div class="tx-panel hidden" id="txPanel" role="dialog" aria-label="تارجت إكس">
+<div class="tx-panel hidden" id="txPanel" role="dialog" aria-label="مستر تارجت">
   <button class="tx-close" aria-label="قفل" onclick="toggleMascotPanel()">×</button>
   <p id="txMessage"></p>
   <p class="tx-tip" id="txTip"></p>
+  <div class="tx-chat" id="txChat"></div>
+  <div class="tx-askrow"><input id="txInput" placeholder="اسأل مستر تارجت..." onkeydown="if(event.key==='Enter')sendMrTarget()"><button class="btn primary" onclick="sendMrTarget()">إرسال</button></div>
 </div>
 <nav class="tabs"><div class="tab-inner">
   <button class="tab active" data-page="home" onclick="showPage('home')"><span>⌂</span>الرئيسية</button>
@@ -634,36 +673,42 @@ function mascotState(){
 }
 function mascotSVG(st,uid){
  uid=uid||"m";
- const eyes={idle:'<ellipse cx="38" cy="46" rx="4.5" ry="5.5" fill="#ff7900"/><ellipse cx="62" cy="46" rx="4.5" ry="5.5" fill="#ff7900"/>',
-  happy:'<path d="M31 47 Q38 38 45 47" stroke="#ff7900" stroke-width="3.2" fill="none" stroke-linecap="round"/><path d="M55 47 Q62 38 69 47" stroke="#ff7900" stroke-width="3.2" fill="none" stroke-linecap="round"/>',
-  concern:'<circle cx="38" cy="48" r="4" fill="#ff7900"/><circle cx="62" cy="48" r="4" fill="#ff7900"/><path d="M30 40 L44 44" stroke="#ff7900" stroke-width="2.6" stroke-linecap="round"/><path d="M70 40 L56 44" stroke="#ff7900" stroke-width="2.6" stroke-linecap="round"/>',
-  celebrate:'<path d="M31 47 Q38 36 45 47" stroke="#ff7900" stroke-width="3.2" fill="none" stroke-linecap="round"/><path d="M55 47 Q62 36 69 47" stroke="#ff7900" stroke-width="3.2" fill="none" stroke-linecap="round"/>'}[st]||"";
- const mouth={idle:'<path d="M42 63 Q50 68 58 63" stroke="#ff7900" stroke-width="3" fill="none" stroke-linecap="round"/>',
-  happy:'<path d="M40 62 Q50 73 60 62" stroke="#ff7900" stroke-width="3" fill="none" stroke-linecap="round"/>',
-  concern:'<path d="M42 69 Q50 62 58 69" stroke="#ff7900" stroke-width="3" fill="none" stroke-linecap="round"/>',
-  celebrate:'<path d="M38 60 Q50 80 62 60 Z" fill="#ff7900"/><path d="M42 66 Q50 72 58 66" stroke="#fff" stroke-width="2" fill="none"/>'}[st]||"";
- return `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+ const mouth={idle:'M40 66 Q50 71 60 66',happy:'M38 64 Q50 76 62 64',concern:'M40 72 Q50 65 60 72',celebrate:'M36 62 Q50 82 64 62 Z'}[st]||'M40 66 Q50 71 60 66';
+ const eyeY = st==="concern"?50:47;
+ const brow = st==="concern"?'<path d="M30 40 L44 43" stroke="#1c1d26" stroke-width="3" stroke-linecap="round"/><path d="M70 40 L56 43" stroke="#1c1d26" stroke-width="3" stroke-linecap="round"/>':'<path d="M30 41 Q37 37 44 41" stroke="#1c1d26" stroke-width="2.6" fill="none" stroke-linecap="round"/><path d="M56 41 Q63 37 70 41" stroke="#1c1d26" stroke-width="2.6" fill="none" stroke-linecap="round"/>';
+ const eyes = st==="happy"||st==="celebrate"
+   ? '<path d="M32 '+eyeY+' Q38 '+(eyeY-7)+' 44 '+eyeY+'" stroke="#1c1d26" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M56 '+eyeY+' Q62 '+(eyeY-7)+' 68 '+eyeY+'" stroke="#1c1d26" stroke-width="3" fill="none" stroke-linecap="round"/>'
+   : '<ellipse cx="38" cy="'+eyeY+'" rx="4" ry="5" fill="#1c1d26"/><ellipse cx="62" cy="'+eyeY+'" rx="4" ry="5" fill="#1c1d26"/><circle cx="39.5" cy="'+(eyeY-1.5)+'" r="1.4" fill="#fff"/><circle cx="63.5" cy="'+(eyeY-1.5)+'" r="1.4" fill="#fff"/>';
+ return `<svg viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
   <defs>
-   <linearGradient id="${uid}body" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#eef0f4"/></linearGradient>
-   <linearGradient id="${uid}armor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffab4d"/><stop offset="1" stop-color="#ff7900"/></linearGradient>
-   <linearGradient id="${uid}holo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff6ee"/><stop offset="1" stop-color="#ffe0c2"/></linearGradient>
-   <radialGradient id="${uid}shine" cx=".35" cy=".3" r=".6"><stop offset="0" stop-color="#fff" stop-opacity=".9"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
-   <clipPath id="${uid}clip"><rect x="30" y="30" width="40" height="30" rx="12"/></clipPath>
+   <linearGradient id="${uid}sk" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e9b48f"/><stop offset="1" stop-color="#c98a64"/></linearGradient>
+   <linearGradient id="${uid}jk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2b2d3d"/><stop offset="1" stop-color="#15161e"/></linearGradient>
+   <linearGradient id="${uid}ac" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ff9d38"/><stop offset="1" stop-color="#ff7900"/></linearGradient>
+   <radialGradient id="${uid}gl" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ff9d38" stop-opacity=".45"/><stop offset="1" stop-color="#ff9d38" stop-opacity="0"/></radialGradient>
   </defs>
-  <ellipse cx="50" cy="96" rx="26" ry="3.5" fill="#24243a" opacity=".12"/>
-  <rect x="22" y="78" width="56" height="16" rx="8" fill="url(#${uid}armor)"/>
-  <rect x="26" y="40" width="48" height="42" rx="14" fill="url(#${uid}body)" stroke="#ffd2a8" stroke-width="1.5"/>
-  <rect x="34" y="56" width="32" height="10" rx="5" fill="url(#${uid}armor)"/>
-  <circle cx="50" cy="72" r="3" fill="#fff"/>
-  <rect x="18" y="46" width="8" height="16" rx="4" fill="url(#${uid}armor)"/>
-  <rect x="74" y="46" width="8" height="16" rx="4" fill="url(#${uid}armor)"/>
-  <rect x="24" y="18" width="52" height="46" rx="18" fill="url(#${uid}body)" stroke="#ffd2a8" stroke-width="1.5"/>
-  <rect x="28" y="22" width="44" height="12" rx="6" fill="url(#${uid}shine)"/>
-  <rect class="tx-holo" x="30" y="30" width="40" height="30" rx="12" fill="url(#${uid}holo)" stroke="#ff9d38" stroke-width="1.8"/>
-  <g clip-path="url(#${uid}clip)"><rect class="tx-scan" x="30" y="30" width="40" height="3" fill="#ff9d38" opacity=".35"/></g>
-  ${eyes}${mouth}
-  <line x1="50" y1="18" x2="50" y2="7" stroke="#ff7900" stroke-width="2"/>
-  <circle class="tx-holo" cx="50" cy="5" r="4" fill="#ff7900"/>
+  <ellipse cx="50" cy="116" rx="28" ry="3.5" fill="#000" opacity=".18"/>
+  <path d="M30 80 L26 112 L44 112 L48 84 Z" fill="#23242f"/>
+  <path d="M70 80 L74 112 L56 112 L52 84 Z" fill="#23242f"/>
+  <rect x="22" y="108" width="24" height="8" rx="4" fill="#111"/><rect x="54" y="108" width="24" height="8" rx="4" fill="#111"/>
+  <path d="M24 58 Q50 46 76 58 L80 86 Q50 96 20 86 Z" fill="url(#${uid}jk)"/>
+  <rect x="44" y="50" width="12" height="10" rx="3" fill="url(#${uid}sk)"/>
+  <path d="M30 56 L50 74 L70 56" stroke="#ff7900" stroke-width="2" fill="none" opacity=".8"/>
+  <circle cx="50" cy="78" r="7" fill="none" stroke="url(#${uid}ac)" stroke-width="2.4"/><circle cx="50" cy="78" r="2.4" fill="#ff7900"/>
+  <path d="M24 60 Q14 72 18 86" stroke="url(#${uid}jk)" stroke-width="9" fill="none" stroke-linecap="round"/>
+  <path d="M76 60 Q86 72 82 86" stroke="url(#${uid}jk)" stroke-width="9" fill="none" stroke-linecap="round"/>
+  <ellipse cx="50" cy="34" rx="24" ry="27" fill="url(#${uid}sk)"/>
+  <path d="M26 30 Q26 6 50 6 Q74 6 74 30 Q66 18 50 18 Q34 18 26 30 Z" fill="#1c1d26"/>
+  <path d="M26 30 Q22 44 27 52 Q28 36 34 30 Z" fill="#1c1d26"/>
+  <path d="M74 30 Q78 44 73 52 Q72 36 66 30 Z" fill="#1c1d26"/>
+  <rect class="tx-holo" x="28" y="22" width="44" height="16" rx="8" fill="url(#${uid}gl)"/>
+  ${brow}${eyes}
+  <path d="M50 46 Q48 52 50 54" stroke="#b5764f" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+  <path d="${mouth}" stroke="#1c1d26" stroke-width="2.6" fill="${st==="celebrate"?"#1c1d26":"none"}" stroke-linecap="round"/>
+  <path d="M74 36 Q80 40 76 52" stroke="#1c1d26" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <rect x="26" y="34" width="6" height="14" rx="3" fill="url(#${uid}ac)"/>
+  <rect x="68" y="34" width="6" height="14" rx="3" fill="url(#${uid}ac)"/>
+  <path d="M74 36 Q76 58 66 62" stroke="#1c1d26" stroke-width="2" fill="none"/>
+  <circle cx="66" cy="62" r="2.6" fill="#ff7900"/>
  </svg>`;
 }
 function mascotMessage(){
@@ -694,7 +739,7 @@ function toggleMascotPanel(){
 }
 
 const INTRO_STEPS=[
- {t:"أهلاً، أنا تارجت إكس 👋",x:"أنا رفيقك في الشغل. هساعدك تتابع تارجتك كل يوم وتعرف إنت فين بالظبط.",st:"happy"},
+ {t:"أهلاً، أنا مستر تارجت 👋",x:"أنا رفيقك في الشغل. هساعدك تتابع تارجتك كل يوم وتعرف إنت فين بالظبط.",st:"happy"},
  {t:"سجّل إنجازك في ثانية ➕",x:"كل بيعة تسجلها من زرار (تسجيل إنجاز) تحدّث الأرقام فوراً. مفيش حاجة تضيع.",st:"idle"},
  {t:"اعرف إنت على المسار ولا لأ 📊",x:"الكارت الكبير بيقولك المتوقع لحد النهارده، والمطلوب يومياً عشان توصل للهدف.",st:"concern"},
  {t:"موسوعة SR جوه إيدك 📚",x:"ابحث بالكود أو بالكلمة، وانسخ أي SR بضغطة. وأنا هفضل جنبك بنصايح في الفقاعة اللي تحت.",st:"celebrate"}
@@ -727,6 +772,53 @@ function closeIntro(){
  document.getElementById("txIntro").classList.add("hidden");
  markIntroSeen();
  renderMascot();
+}
+
+const FLY_SPOTS=[{l:14,b:96},{l:null,r:14,b:200},{l:14,b:300},{r:14,b:420}];
+let flyIdx=0;
+function flyMascot(){
+ if(window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+ const btn=document.getElementById("txMascotBtn");
+ if(!btn||!document.getElementById("txPanel").classList.contains("hidden"))return;
+ flyIdx=(flyIdx+1)%FLY_SPOTS.length;
+ const sp=FLY_SPOTS[flyIdx];
+ btn.style.left=sp.l!=null?sp.l+"px":"auto";
+ btn.style.right=sp.r!=null?sp.r+"px":"auto";
+ btn.style.bottom=sp.b+"px";
+ btn.classList.add("tx-flying");
+ setTimeout(()=>btn.classList.remove("tx-flying"),1200);
+}
+function askMrTarget(q){
+ const t=(q||"").trim().toLowerCase();
+ const lines=kpi("lines"), a=achieved("lines"), tg=Number(lines.target)||0;
+ const m=state.settings.month;
+ const last=new Date(Date.UTC(+m.slice(0,4),+m.slice(5,7),0)).toISOString().slice(0,10);
+ const pace=TargetXEngine.paceForMonth({monthStart:m+"-01",monthEnd:last,today:localDate(),rules:{}});
+ const req=TargetXEngine.requiredDaily(tg,a,pace.remainingWorkdays);
+ if(/فاضل|متبقي|باقي|ناقص/.test(t)){
+  if(req.state==="done")return "🎉 خلصت تارجت الخطوط! كمّل بنفس الروح.";
+  if(req.state==="no_workdays_left")return `فاضل ${fmt(req.remaining)} خط ومفيش أيام شغل متبقية في الشهر.`;
+  return `فاضل ${fmt(req.remaining)} خط على ${pace.remainingWorkdays} يوم شغل، يعني تقريباً ${fmt(req.perDay)} خط يومياً.`;
+ }
+ if(/نسبة|وصلت|فين|انجاز|إنجاز|تقدم/.test(t)){
+  return `وصلت لـ ${fmt(a)} من ${fmt(tg)} خط (${fmt(pct("lines"))}%). المتوقع لحد النهارده ${fmt(pace.expectedPct)}%.`;
+ }
+ if(/موسوعة|sr|كود|كودات/.test(t)){
+  return "افتح 📚 موسوعة SR من صفحة الرئيسية، وابحث بالكود أو بالكلمة، وانسخ أي سجل بضغطة.";
+ }
+ if(/ازاي|إزاي|اعمل|اسجل|تسجيل|شرح|مساعدة|بتعمل/.test(t)){
+  return "سجّل إنجازك من زرار ➕ تسجيل إنجاز، والأرقام بتتحدث فوراً. وتقدر تشوف التفاصيل في التقارير.";
+ }
+ return "أقدر أقولك فاضل كام، ونسبتك إيه، وأشرح أي شاشة. جرّب تسألني: \"فاضل كام؟\" أو \"ازاي أسجل إنجاز؟\"";
+}
+function sendMrTarget(){
+ const inp=document.getElementById("txInput");
+ const q=inp.value; if(!q.trim())return;
+ const box=document.getElementById("txChat");
+ box.insertAdjacentHTML("beforeend",`<div class="tx-me">${safe(q)}</div>`);
+ const ans=askMrTarget(q);
+ setTimeout(()=>{box.insertAdjacentHTML("beforeend",`<div class="tx-bot">${safe(ans)}</div>`);box.scrollTop=box.scrollHeight},250);
+ inp.value="";
 }
 function renderReports(){
  const items=state.settings.kpis;
@@ -786,6 +878,7 @@ function importData(event){
  reader.readAsText(file);
 }
 if(!introIsSeen()) window.addEventListener("load",openIntro);
+setInterval(flyMascot,9000);
 </script>
 </body>
 </html>
