@@ -139,8 +139,8 @@ main{padding:18px}
 .tx-askrow{display:flex;gap:8px}
 .tx-askrow input{flex:1;border:1px solid #e3e5ec;border-radius:12px;padding:10px 12px;font:inherit}
 .tx-askrow button{padding:10px 14px}
-.tx-flying{animation:txFly 1.2s ease-in-out}
-@keyframes txFly{0%{transform:translateY(0) rotate(0)}50%{transform:translateY(-22px) rotate(-6deg)}100%{transform:translateY(0) rotate(0)}}
+.tx-flying{animation:txFly 2.8s ease-in-out}
+@keyframes txFly{0%{transform:translateY(0)}50%{transform:translateY(-10px)}100%{transform:translateY(0)}}
 .tx-panel .tx-close{position:absolute;left:10px;top:8px;border:0;background:none;font-size:18px;color:#999}
 .tx-holo{animation:txGlow 2.6s ease-in-out infinite}
 .tx-scan{animation:txScan 2.4s linear infinite}
@@ -161,8 +161,8 @@ main{padding:18px}
 @keyframes txGlow{0%,100%{opacity:.75}50%{opacity:1}}
 @keyframes txBounce{0%,100%{transform:translateY(0)}30%{transform:translateY(-8px)}60%{transform:translateY(0)}}
 .tx-celebrate svg{animation:txBounce 1.1s ease-in-out infinite}
-.tx-breath{animation:txBreath 3.6s ease-in-out infinite;transform-origin:50% 100%}
-@keyframes txBreath{0%,100%{transform:scale(1)}50%{transform:scale(1.04)}}
+.tx-breath{animation:txBreath 5s ease-in-out infinite;transform-origin:50% 100%}
+@keyframes txBreath{0%,100%{transform:scale(1)}50%{transform:scale(1.015)}}
 .tx-grow{transform:scale(1.25)!important;transition:transform .5s cubic-bezier(.2,1.4,.4,1)}
 .tx-wave{animation:txWave .9s ease-in-out 2}
 @keyframes txWave{0%,100%{transform:rotate(0)}50%{transform:rotate(-14deg)}}
@@ -870,7 +870,7 @@ function flyMascot(){
  btn.style.right=sp.r!=null?sp.r+"px":"auto";
  btn.style.bottom=sp.b+"px";
  btn.classList.add("tx-flying");
- setTimeout(()=>btn.classList.remove("tx-flying"),1200);
+ setTimeout(()=>btn.classList.remove("tx-flying"),2800);
 }
 function askMrTarget(q){
  const t=(q||"").trim().toLowerCase();
@@ -1003,7 +1003,7 @@ function importData(event){
  reader.readAsText(file);
 }
 if(!introIsSeen()) window.addEventListener("load",openIntro);
-setInterval(flyMascot,9000);
+setInterval(flyMascot,25000);
 </script>
 </body>
 </html>
