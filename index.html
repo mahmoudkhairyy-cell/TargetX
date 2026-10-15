@@ -197,8 +197,43 @@ header{background:#ffffff;color:var(--ink);border-radius:0 0 24px 24px;box-shado
  .tab.active{background:var(--accent);color:#fff;box-shadow:0 8px 18px #ff790040}
  .app{margin-right:220px;max-width:none}
  .app{padding-bottom:30px}
- .tx-mascot-btn{bottom:24px}
+ .tx-mascot-btn{bottom:24px;left:auto;right:24px}
 }
+
+/* ===== Mr. Target — dark command-center theme ===== */
+body{background:radial-gradient(1200px 600px at 80% -10%,#24305a55,transparent),#0c1020;color:#e8ecf7}
+header{background:#121729;color:#e8ecf7;box-shadow:0 10px 30px #0006;border-bottom:1px solid #22304f}
+.brand h1,.welcome h2,.section-head h3,.stat-value,.big-number,.amount{color:#f2f5ff}
+.brand p,.section-head .sub,.sub,.note,.stat-label,.stat-bottom,.history-info p,.empty{color:#8f9ab8!important}
+.card{background:linear-gradient(160deg,#171e33,#10152a);border:1px solid #242f4f;box-shadow:0 10px 30px #0006;color:#e8ecf7}
+.card.hero-card{background:linear-gradient(135deg,#ff7900 0%,#ff9d38 60%,#ffb36b 100%);color:#fff;border:0}
+.card.hero-card .eyebrow,.card.hero-card .big-number,.card.hero-card .hero-foot,.card.hero-card span{color:#fff!important}
+.field input,.field select,.tx-askrow input,#encSearch{background:#0e1426;border:1px solid #2a3760;color:#e8ecf7}
+.field label{color:#b6c0dc}
+.btn.secondary{background:#1a2442;color:#ffb36b;border:1px solid #2a3760}
+.tab{color:#8f9ab8}
+.tabs{background:#0f1426;border-top:1px solid #22304f}
+.progress,.mini-progress{background:#22304f}
+.history-row{border-color:#242f4f}
+.tx-panel{background:#121a30;color:#e8ecf7;border-top-color:#ff7900;box-shadow:0 20px 50px #000a}
+.tx-chat .tx-bot{background:#1b2544;color:#e8ecf7}
+.tx-mascot-btn{background:#121a30;box-shadow:0 0 0 1px #ff790055,0 10px 30px #ff790033}
+.dash{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:6px 0 18px}
+@media (max-width:700px){.dash{grid-template-columns:1fr}}
+.dash-card{position:relative;min-height:230px;overflow:hidden;padding:18px}
+.dash-card h4{margin:0 0 10px;font-size:15px;color:#f2f5ff;display:flex;justify-content:space-between;align-items:center}
+.dash-card h4 small{color:#ffb36b;font-weight:700;font-size:11px}
+.dash-bot{position:absolute;left:-6px;bottom:-4px;width:84px;height:100px;opacity:.95;filter:drop-shadow(0 0 14px #ff790055)}
+.dash-bot.right{display:none}
+.bar-row{margin:8px 0}
+.bar-row .lbl{display:flex;justify-content:space-between;font-size:12px;color:#c6cee6}
+.bar-row .track{height:8px;border-radius:6px;background:#22304f;overflow:hidden;margin-top:4px}
+.bar-row .fill{height:100%;border-radius:6px;background:linear-gradient(90deg,#ff9d38,#ff7900)}
+.tip{background:#1a2442;border:1px solid #2a3760;border-radius:12px;padding:10px 12px;margin:8px 0;font-size:12.5px;line-height:1.8;color:#dfe5f7}
+.tip b{color:#ffb36b}
+.dash-ring{width:110px;height:110px;margin:4px auto 0;display:block}
+@keyframes dashFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.dash-bot svg{animation:dashFloat 4s ease-in-out infinite}
 </style>
 </head>
 <body>
@@ -220,6 +255,7 @@ header{background:#ffffff;color:var(--ink);border-radius:0 0 24px 24px;box-shado
 
 <main>
 <section id="homePage">
+  <div class="dash" id="dash"></div>
   <div class="section-head"><div><h3>ملخص الأداء 🚀</h3>
   <div class="sub">كل إنجاز صغير بيقربك من هدفك</div></div>
   <button class="btn secondary" onclick="showPage('targets')">تعديل الأهداف</button>
@@ -550,6 +586,7 @@ function renderHome(){
  const lines=kpi("lines");
  renderPace();
  renderMascot();
+ renderDash();
  const overall=TargetXEngine.computeOverall(state.settings.kpis,Object.fromEntries(state.settings.kpis.map(k=>[k.id,achieved(k.id)])),{});
  document.getElementById("overallScore").textContent=fmt(overall.overall)+"%";
  document.getElementById("weightTotal").textContent=fmt(overall.weights.total);
@@ -866,6 +903,47 @@ function sendMrTarget(){
  const ans=askMrTarget(q);
  setTimeout(()=>{box.insertAdjacentHTML("beforeend",`<div class="tx-bot">${safe(ans)}</div>`);box.scrollTop=box.scrollHeight},250);
  inp.value="";
+}
+
+function renderDash(){
+ const lines=kpi("lines"), a=achieved("lines"), t=Number(lines.target)||0;
+ const m=state.settings.month;
+ const last=new Date(Date.UTC(+m.slice(0,4),+m.slice(5,7),0)).toISOString().slice(0,10);
+ const pace=TargetXEngine.paceForMonth({monthStart:m+"-01",monthEnd:last,today:localDate(),rules:{}});
+ const req=TargetXEngine.requiredDaily(t,a,pace.remainingWorkdays);
+ const pctNow=pct("lines");
+ const todayEntries=activeEntries().filter(e=>e.date===localDate());
+ const byKpi={};
+ todayEntries.forEach(e=>{byKpi[e.id]=(byKpi[e.id]||0)+Number(e.qty||0)});
+ const kpiRows=state.settings.kpis.filter(k=>k.id!=="wallets").map(k=>{
+  const v=byKpi[k.id]||0; const w=Math.min(100,Math.max(0,pct(k.id)));
+  return `<div class="bar-row"><div class="lbl"><span>${safe(k.name)}</span><b>${fmt(v)} اليوم</b></div>
+   <div class="track"><div class="fill" style="width:${w}%"></div></div></div>`;
+ }).join("");
+ const tips=[];
+ if(pctNow>=100) tips.push("<b>🏆 خلصت تارجت الخطوط.</b> كمّل بنفس الإيقاع، والزيادة بتتحسب.");
+ else if(req.state==="needed") tips.push(`<b>المطلوب يومياً:</b> ${fmt(req.perDay)} خط لحد آخر الشهر.`);
+ if(pace.expectedPct-pctNow>=1 && pctNow<100) tips.push(`<b>متأخر</b> عن المتوقع بـ ${fmt(pace.expectedPct-pctNow)}%. ركّز على الخطوط الأسهل أولاً.`);
+ const weakest=state.settings.kpis.filter(k=>k.id!=="wallets").sort((x,y)=>pct(x.id)-pct(y.id))[0];
+ if(weakest && pct(weakest.id)<70) tips.push(`<b>أضعف مؤشر:</b> ${safe(weakest.name)} (${fmt(pct(weakest.id))}%). ده المكان اللي يستاهل وقتك.`);
+ if(!tips.length) tips.push("سجّل أول إنجاز ليك، وأنا هحلل الأرقام وأقترح الخطوة الجاية.");
+ const ringOff=314-314*Math.min(1,Math.max(0,pctNow)/100);
+ const st=mascotState().state;
+ const robot=(cls)=>`<div class="dash-bot ${cls}">${mascotSVG(st,"d"+cls)}</div>`;
+ document.getElementById("dash").innerHTML=`
+  <div class="card dash-card"><h4>إنجازات الشهر <small>${fmt(pctNow)}%</small></h4>
+   <svg class="dash-ring" viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="50" fill="none" stroke="#22304f" stroke-width="10"/>
+   <circle cx="60" cy="60" r="50" fill="none" stroke="#ff7900" stroke-width="10" stroke-linecap="round" stroke-dasharray="314" stroke-dashoffset="${ringOff}" transform="rotate(-90 60 60)"/></svg>
+   <p class="note" style="text-align:center;margin:8px 0 0">${fmt(a)} من ${fmt(t)} خط</p>
+   ${robot("")}</div>
+  <div class="card dash-card"><h4>تحليل اليوم <small>${todayEntries.length} تسجيل</small></h4>${kpiRows}</div>
+  <div class="card dash-card"><h4>تخطيط الهدف <small>${pace.remainingWorkdays} يوم شغل متبقي</small></h4>
+   <p class="note" style="margin:6px 0">المتوقع لحد النهارده <b style="color:#ffb36b">${fmt(pace.expectedPct)}%</b></p>
+   ${req.state==="needed"?`<div class="tip">يومياً: <b>${fmt(req.perDay)}</b> خط للوصول للهدف</div>`:""}
+   <div style="height:10px;border-radius:8px;background:#22304f;overflow:hidden"><div style="height:100%;width:${Math.min(100,pace.expectedPct)}%;background:#3a4a7a"></div></div></div>
+  <div class="card dash-card"><h4>نصائح مستر تارجت <small>ذكي</small></h4>
+   ${tips.map(x=>`<div class="tip">${x}</div>`).join("")}
+   ${robot("right")}</div>`;
 }
 function renderReports(){
  const items=state.settings.kpis;
