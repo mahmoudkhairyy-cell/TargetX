@@ -1,5 +1,8 @@
-# TargetX
- TargetX - Orange Sales
+# تارجت إكس · TargetX
+
+تطبيق لمتابعة التارجت والمبيعات. تم تطويره بواسطة **محمود خيري** (Mahmoud Khairy).
+
+> أداة مستقلة لتتبع الأداء الشخصي، وليست منتجًا رسميًا تابعًا لأورانج ولا معتمدة من الشركة.
 
 # 🍊 Track Your Sales
 
@@ -12,7 +15,7 @@
 - 📊 **Smart Dashboard** — Track your sales performance at a glance.
 - 🎯 **Target Tracking** — Monitor targets and achievement percentages.
 - 📱 **Sales Management** — Record new lines, Orange Cash wallets, Postpaid, DSL, points, and quality.
-- 🍊 **Orangawy Mascot** — A friendly companion to keep you motivated.
+- 🍊 **تارجت إكس Mascot** — A friendly companion to keep you motivated.
 - 📈 **Performance Reports** — Review your achievements and remaining targets.
 - 💾 **Local Data Storage** — Save your records in your browser.
 - 🔄 **Backup & Restore** — Export and import your data.
@@ -46,12 +49,12 @@ This version stores data locally in the browser on the device being used. It doe
 - [ ] Cloud synchronization
 - [ ] Secure employee accounts
 - [ ] Advanced KPI calculations
-- [ ] Enhanced Orangawy mascot and animations
+- [ ] Enhanced تارجت إكس mascot and animations
 - [ ] Monthly and daily performance analytics
 
 ## 🎨 Brand Identity
 
-Orange-inspired colors, a clean modern interface, and the friendly **Orangawy 🍊** mascot.
+Orange-inspired colors, a clean modern interface, and the friendly **تارجت إكس 🍊** mascot.
 
 ---
 

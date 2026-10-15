@@ -5,7 +5,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#ff7900">
-<title>Track Your Sales | Orange</title>
+<meta name="author" content="Mahmoud Khairy - محمود خيري">
+<meta name="description" content="تارجت إكس: أداة مستقلة لمتابعة التارجت والمبيعات">
+<title>تارجت إكس | TargetX</title>
 <style>
 :root {
   --orange:#ff7900; --orange2:#ff9d38; --ink:#22232a;
@@ -118,6 +120,8 @@ main{padding:18px}
  .hero-card{grid-column:span 2}
  main{padding:22px 26px}
 }
+.credit{text-align:center;font-size:11px;color:#8a8a96;line-height:1.8;padding:18px 16px 110px}
+.credit b{color:var(--ink)}
 </style>
 </head>
 <body>
@@ -126,14 +130,14 @@ main{padding:18px}
   <div class="top">
     <div class="brand">
       <div class="logo">🍊</div>
-      <div><h1>Track Your Sales</h1><p>YOUR SALES. YOUR SUCCESS.</p></div>
+      <div><h1>تارجت إكس · TargetX</h1><p>YOUR SALES. YOUR SUCCESS.</p></div>
     </div>
     <button class="avatar" onclick="editEmployee()">👤 الموظف</button>
   </div>
   <div class="welcome">
     <div><h2>أهلاً يا بطل 👋<br><span id="employeeGreeting">جاهز تكسر التارجت؟</span></h2>
       <p id="todayText"></p></div>
-    <div class="mascot" aria-label="أورنجاوي">🍊</div>
+    <div class="mascot" aria-label="تارجت إكس">🍊</div>
   </div>
 </header>
 
@@ -165,7 +169,7 @@ main{padding:18px}
   <div class="grid" id="kpiGrid"></div>
 
   <div class="mascot-box"><div class="mascot-small">🍊</div>
-    <div><strong>أورنجاوي بيقولك 💬</strong><p id="mascotMessage">يلا نبدأ يوم قوي! كل عملية بتفرق في نتيجتك.</p></div>
+    <div><strong>تارجت إكس بيقولك 💬</strong><p id="mascotMessage">يلا نبدأ يوم قوي! كل عملية بتفرق في نتيجتك.</p></div>
   </div>
 
   <div class="section-head"><div><h3>آخر الإنجازات</h3>
@@ -219,6 +223,7 @@ main{padding:18px}
 </section>
 </main>
 
+<footer class="credit">تم تطوير تارجت إكس بواسطة <b>محمود خيري</b> · Mahmoud Khairy<br>أداة مستقلة لتتبع الأداء الشخصي، وليست منتجًا رسميًا تابعًا لأورانج ولا معتمدة من الشركة.</footer>
 <nav class="tabs"><div class="tab-inner">
   <button class="tab active" data-page="home" onclick="showPage('home')"><span>⌂</span>الرئيسية</button>
   <button class="tab" data-page="targets" onclick="showPage('targets')"><span>🎯</span>التارجت</button>
@@ -244,7 +249,7 @@ function freshState(){
  return {settings:{employee:"",branch:"",month:currentMonth(),
    kpis:DEFAULT_KPIS.map(k=>({...k}))},entries:[]};
 }
-function currentMonth(){return new Date().toISOString().slice(0,7)}
+function currentMonth(){return localDate().slice(0,7)}
 function localDate(){
  const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
 }
@@ -386,4 +391,46 @@ function deleteEntry(createdAt){
  persist();renderHome();renderReports();showToast("تم حذف التسجيل");
 }
 function clearEntries(){
- if(!confirm("هتمسح ك
+ const month=state.settings.month;
+ const count=activeEntries().length;
+ if(!count){showToast("مفيش تسجيلات في الشهر ده");return}
+ if(!confirm(`هتمسح ${count} تسجيل من شهر ${month}؟ الإجراء ده مينفعش يترجع.`))return;
+ state.entries=state.entries.filter(e=>!(e.date&&e.date.slice(0,7)===month));
+ persist();renderHome();renderReports();showToast("تم مسح تسجيلات الشهر");
+}
+function exportData(){
+ const payload={app:"TargetX",owner:"Mahmoud Khairy",exportedAt:new Date().toISOString(),
+   settings:state.settings,entries:state.entries};
+ const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});
+ const a=document.createElement("a");
+ a.href=URL.createObjectURL(blob);a.download=`targetx-backup-${localDate()}.json`;
+ document.body.appendChild(a);a.click();a.remove();
+ setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+ showToast("تم تصدير النسخة الاحتياطية");
+}
+function importData(event){
+ const file=event.target.files&&event.target.files[0];
+ if(!file)return;
+ const reader=new FileReader();
+ reader.onload=()=>{
+  try{
+   const data=JSON.parse(reader.result);
+   if(!data||!data.settings||!Array.isArray(data.entries)||!Array.isArray(data.settings.kpis))
+    throw new Error("bad format");
+   if(!confirm("هيتم استبدال البيانات الحالية بالنسخة دي. متأكد؟")){event.target.value="";return}
+   state={settings:{employee:data.settings.employee||"",branch:data.settings.branch||"",
+     month:data.settings.month||currentMonth(),kpis:data.settings.kpis},
+    entries:data.entries.filter(e=>e&&e.id&&e.date&&e.createdAt)};
+   state.settings.kpis=DEFAULT_KPIS.map(def=>{
+    const old=state.settings.kpis.find(k=>k.id===def.id);
+    return old?{...def,...old}:{...def};
+   });
+   persist();renderHome();renderReports();showToast("تمت استعادة النسخة بنجاح");
+  }catch(e){showToast("الملف مش نسخة TargetX صالحة")}
+  event.target.value="";
+ };
+ reader.readAsText(file);
+}
+</script>
+</body>
+</html>
