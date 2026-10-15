@@ -235,6 +235,33 @@ header{background:#121729;color:#e8ecf7;box-shadow:0 10px 30px #0006;border-bott
 @keyframes dashFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
 .dash-bot svg{animation:dashFloat 4s ease-in-out infinite}
 .tab small{display:block;font-size:10px;opacity:.75;font-weight:600;margin-top:1px}
+.hero,.hero-card,.dash-hero{background:linear-gradient(135deg,#ff8a2b 0%,#ff6a00 100%)!important;color:#fff!important;border-radius:26px!important}
+body{background:#fdf8f3}
+.tab.active{background:linear-gradient(135deg,#ff9d38,#ff7900)!important;color:#fff!important}
+.reports-block{margin-top:6px}
+body,.app,main{background:#fdf8f3!important;color:#1d1d26!important}
+.card,.dash-card,.tx-panel,.stat,.hero-card{background:#ffffff!important;color:#1d1d26!important;border-color:#f1e4d6!important}
+.hero,.hero-card,.dash-hero{color:#fff!important}
+.tabs{background:#ffffff!important;border-top:1px solid #f1e4d6!important}
+.tab{color:#8d8d98!important}
+.tx-panel{border-top:4px solid #ff7900!important}
+.tx-chat .tx-bot{background:#fff4ea!important;color:#1d1d26!important}
+.tx-mascot-btn{background:transparent!important}
+.stat-label,.sub,.note{color:#7a6f66!important}
+header{background:#ffffff!important;color:#1d1d26!important;border-bottom:1px solid #f1e4d6!important;box-shadow:0 6px 24px #ff790014!important}
+.welcome{background:#ffffff!important;color:#1d1d26!important;border:1px solid #f1e4d6!important}
+.welcome h2,.welcome span{color:#1d1d26!important}
+.dash-card h4,.dash-card .note,.dash-card b{color:#1d1d26!important}
+.dash-card h4 small{color:#ff7900!important}
+.bar-row .lbl{color:#4a4640!important}
+.bar-row .track{background:#f3e6da!important}
+.dash-bot{display:none!important}
+.tip{background:#fff4ea!important;color:#1d1d26!important}
+.empty{color:#7a6f66!important}
+header h1,header .top *{color:#1d1d26!important}
+header p{color:#7a6f66!important}
+.avatar{background:#fff4ea!important;color:#1d1d26!important;border:1px solid #f1e4d6!important}
+input,select,textarea{background:#fff!important;color:#1d1d26!important;border-color:#eadbcc!important}
 </style>
 </head>
 <body>
@@ -298,6 +325,14 @@ header{background:#121729;color:#e8ecf7;box-shadow:0 10px 30px #0006;border-bott
   <div class="section-head"><div><h3>آخر الإنجازات</h3>
   <div class="sub">تسجيلاتك الأخيرة على الجهاز</div></div></div>
   <div class="card" id="recentList"></div>
+<div id="reportsBlock" class="reports-block">
+  <div class="section-head"><div><h3>التقارير 📊</h3>
+  <div class="sub">ملخص الإنجاز خلال الشهر المحدد</div></div></div>
+  <div class="grid" id="reportGrid"></div>
+  <div class="section-head"><div><h3>سجل العمليات بالكامل</h3></div>
+    <button class="btn secondary" onclick="clearEntries()">مسح السجل</button></div>
+  <div class="card" id="allEntries"></div>
+</div>
 </section>
 
 <section id="addPage" class="hidden">
@@ -353,14 +388,7 @@ header{background:#121729;color:#e8ecf7;box-shadow:0 10px 30px #0006;border-bott
   <p class="note">المصدر: orange-sr-cshunts.vercel.app (غير رسمي، من إعداد الموظف)</p>
 </section>
 
-<section id="reportsPage" class="hidden">
-  <div class="section-head"><div><h3>التقارير 📊</h3>
-  <div class="sub">ملخص الإنجاز خلال الشهر المحدد</div></div></div>
-  <div class="grid" id="reportGrid"></div>
-  <div class="section-head"><div><h3>سجل العمليات بالكامل</h3></div>
-    <button class="btn secondary" onclick="clearEntries()">مسح السجل</button></div>
-  <div class="card" id="allEntries"></div>
-</section>
+
 </main>
 
 <footer class="credit">تم تطوير مستر تارجت بواسطة <b>محمود خيري</b> · Mahmoud Khairy<br>أداة مستقلة لتتبع الأداء الشخصي، وليست منتجًا رسميًا تابعًا لأورانج ولا معتمدة من الشركة.</footer>
@@ -387,7 +415,7 @@ header{background:#121729;color:#e8ecf7;box-shadow:0 10px 30px #0006;border-bott
 <nav class="tabs"><div class="tab-inner">
   <button class="tab active" data-page="home" onclick="showPage('home')"><span>⌂</span>الرئيسية<small>Home</small></button>
   <button class="tab" data-page="targets" onclick="showPage('targets')"><span>🎯</span>التارجت<small>Targets</small></button>
-  <button class="tab" data-page="reports" onclick="showPage('reports')"><span>▤</span>التقارير<small>Reports</small></button>
+  <button class="tab" data-page="ai" onclick="toggleMascotPanel()"><span>✦</span>مساعد AI<small>Assistant</small></button>
   <button class="tab" data-page="add" onclick="showPage('add')"><span>＋</span>سجّل<small>Add</small></button>
 </div></nav>
 <div id="toast" class="toast hidden" role="status"></div>
@@ -547,12 +575,11 @@ function showToast(msg){
  clearTimeout(showToast.timer);showToast.timer=setTimeout(()=>t.classList.add("hidden"),2300);
 }
 function showPage(page){
- ["home","add","targets","reports","enc"].forEach(p=>
+ ["home","add","targets","enc"].forEach(p=>
   document.getElementById(p+"Page").classList.toggle("hidden",p!==page));
  document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("active",b.dataset.page===page));
  if(page==="targets")renderSettings();
  if(page==="add")renderProductSelect();
- if(page==="reports")renderReports();
  if(page==="enc")renderEncyclopedia();
  window.scrollTo({top:0,behavior:"smooth"});
 }
@@ -588,6 +615,7 @@ function renderHome(){
  renderPace();
  renderMascot();
  renderDash();
+ renderReports();
  const overall=TargetXEngine.computeOverall(state.settings.kpis,Object.fromEntries(state.settings.kpis.map(k=>[k.id,achieved(k.id)])),{});
  document.getElementById("overallScore").textContent=fmt(overall.overall)+"%";
  document.getElementById("weightTotal").textContent=fmt(overall.weights.total);
@@ -896,12 +924,41 @@ function askMrTarget(q){
  }
  return "أقدر أقولك فاضل كام، ونسبتك إيه، وأشرح أي شاشة. جرّب تسألني: \"فاضل كام؟\" أو \"ازاي أسجل إنجاز؟\"";
 }
+function aiReply(q){
+ const t=(q||"").trim().toLowerCase();
+ const lines=kpi("lines"), a=achieved("lines"), tg=Number(lines.target)||0;
+ const m=state.settings.month;
+ const last=new Date(Date.UTC(+m.slice(0,4),+m.slice(5,7),0)).toISOString().slice(0,10);
+ const pace=TargetXEngine.paceForMonth({monthStart:m+"-01",monthEnd:last,today:localDate(),rules:{}});
+ const req=TargetXEngine.requiredDaily(tg,a,pace.remainingWorkdays);
+ if(/^(اهلا|أهلا|هاي|hi|hello|السلام|ازيك|إزيك|صباح|مساء)/.test(t)) return "أهلاً يا بطل! أنا مستر تارجت، اسألني عن تارجتك، أو أقولك إزاي تحسّن أرقامك، أو أشرحلك أي شاشة. 😊";
+ if(/شكر|تسلم|thank/.test(t)) return "العفو يا بطل! كمّل كده وأنا جنبك. 💪";
+ if(/فاضل|متبقي|باقي|ناقص|remaining|left/.test(t)){
+  if(req.state==="done") return "🎉 خلصت تارجت الخطوط! كمّل بنفس الروح.";
+  if(req.state==="no_workdays_left") return `فاضل ${fmt(req.remaining)} خط، ومفيش أيام شغل باقية في الشهر.`;
+  return `فاضل ${fmt(req.remaining)} خط على ${pace.remainingWorkdays} يوم شغل، يعني حوالي ${fmt(req.perDay)} خط كل يوم.`;
+ }
+ if(/نسبة|وصلت|فين|تقدم|انجاز|إنجاز|عامل|progress|percent/.test(t))
+  return `وصلت لـ ${fmt(a)} من ${fmt(tg)} خط (${fmt(pct("lines"))}%). المفروض تكون وصلت لـ ${fmt(pace.expectedPct)}% لحد النهارده.`;
+ if(/ازاي|إزاي|اسجل|تسجيل|سجل|how/.test(t))
+  return "اضغط زرار (سجّل) تحت، اختار نوع الإنجاز، واكتب الكمية والتاريخ، وخلاص. الأرقام بتتحدث على طول.";
+ if(/تارجت|target|وزن|weight|حساب|محسوب/.test(t))
+  return "التارجت الإجمالي بيتحسب من أوزان المؤشرات: الخطوط 40%، والمحافظ القائمة 15%، والجودة 15%، والنقاط والـ Postpaid والـ DSL 10% لكل واحد. تقدر تعدّل الأوزان من صفحة التارجت.";
+ if(/موسوعة|sr|كود|كودات/.test(t))
+  return "افتح 📚 موسوعة SR من الرئيسية، ابحث بالكود أو بالكلمة، وانسخ أي سجل بضغطة.";
+ if(/نصيحة|اعمل|أعمل|ازود|أزود|احسن|أحسن|tip|advice/.test(t)){
+  if(pct("lines")>=100) return "أنت خلصت تارجت الخطوط. ركّز دلوقتي على المحافظ والنقاط عشان ترفع الإجمالي.";
+  if(req.state==="needed") return `ركّز على الخطوط الأسهل الأول، واستهدف ${fmt(req.perDay)} خط كل يوم. وسجّل كل بيعة فوراً عشان ما تنساهاش.`;
+  return "كمّل بنفس الإيقاع، وراقب المؤشر الأضعف في الرئيسية عشان تعالجه بسرعة.";
+ }
+ return "أنا مساعد التارجت بتاعك: أقدر أقولك فاضل كام، ونسبتك إيه، وأشرح الحسابات، وأساعدك تسجّل وتلاقي كودات SR. اسألني بالعامية زي ما تحب، مثلاً: \"فاضل كام؟\" أو \"أزود إزاي؟\"";
+}
 function sendMrTarget(){
  const inp=document.getElementById("txInput");
  const q=inp.value; if(!q.trim())return;
  const box=document.getElementById("txChat");
  box.insertAdjacentHTML("beforeend",`<div class="tx-me">${safe(q)}</div>`);
- const ans=askMrTarget(q);
+ const ans=aiReply(q);
  setTimeout(()=>{box.insertAdjacentHTML("beforeend",`<div class="tx-bot">${safe(ans)}</div>`);box.scrollTop=box.scrollHeight},250);
  inp.value="";
 }
@@ -1004,6 +1061,7 @@ function importData(event){
  reader.readAsText(file);
 }
 renderMascot();
+renderHome();
 if(!introIsSeen()) window.addEventListener("load",openIntro);
 setInterval(flyMascot,25000);
 </script>
