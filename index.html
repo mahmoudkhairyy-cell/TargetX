@@ -1,0 +1,389 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#ff7900">
+<title>Track Your Sales | Orange</title>
+<style>
+:root {
+  --orange:#ff7900; --orange2:#ff9d38; --ink:#22232a;
+  --muted:#858591; --bg:#f5f5f7; --white:#fff;
+  --line:#ededf1; --green:#16a56a; --red:#e34d59;
+  --shadow:0 8px 28px #24243a0b;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+ font-family:Tahoma,Arial,sans-serif;font-size:14px}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.app{max-width:1120px;margin:auto;min-height:100vh;padding-bottom:90px}
+header{padding:22px 20px 24px;background:linear-gradient(130deg,#ff7900,#ff9e38);
+ color:white;border-radius:0 0 28px 28px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{display:flex;align-items:center;gap:10px}
+.logo{width:45px;height:45px;border-radius:15px;background:#ffffff29;
+ display:grid;place-items:center;font-size:26px;border:1px solid #ffffff50}
+.brand h1{font-size:18px;margin:0 0 5px;font-weight:900}
+.brand p{font-size:11px;margin:0;opacity:.9}
+.avatar{background:#ffffff2c;border:1px solid #ffffff50;color:white;
+ padding:10px 12px;border-radius:13px}
+.welcome{display:flex;align-items:center;justify-content:space-between;
+ gap:10px;margin-top:26px}
+.welcome h2{font-size:23px;line-height:1.6;margin:0;font-weight:900}
+.welcome p{margin:4px 0 0;opacity:.92;font-size:12px}
+.mascot{font-size:65px;filter:drop-shadow(0 8px 8px #a64d2029);
+ animation:bob 3s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-5px)}}
+main{padding:18px}
+.section-head{display:flex;align-items:center;justify-content:space-between;
+ gap:10px;margin:23px 0 13px}
+.section-head h3{font-size:16px;margin:0;font-weight:900}
+.sub{color:var(--muted);font-size:11px;margin-top:5px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.card{background:white;border:1px solid #eeeeF3;border-radius:19px;
+ padding:16px;box-shadow:var(--shadow);min-width:0}
+.hero-card{background:linear-gradient(135deg,#272833,#41414d);
+ color:white;border:0;padding:20px}
+.hero-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.eyebrow{font-size:11px;color:#ffffffb5}
+.big-number{font-size:35px;font-weight:900;letter-spacing:-1px;margin:9px 0}
+.pill{display:inline-block;padding:6px 9px;border-radius:20px;
+ background:#ffffff18;font-size:10px}
+.progress{height:8px;border-radius:20px;background:#ffffff24;
+ overflow:hidden;margin:14px 0 10px}
+.progress span{display:block;height:100%;width:0;
+ background:linear-gradient(90deg,#ffb15f,#ff7900);
+ border-radius:20px;transition:width .4s}
+.hero-foot{display:flex;justify-content:space-between;gap:10px;
+ font-size:11px;color:#ffffffb8}
+.stat-icon{width:39px;height:39px;border-radius:13px;
+ display:grid;place-items:center;background:#fff0e3;font-size:20px}
+.stat-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.stat-label{font-size:12px;color:var(--muted);margin-top:13px}
+.stat-value{font-size:24px;font-weight:900;margin:7px 0}
+.stat-bottom{display:flex;justify-content:space-between;align-items:center;
+ font-size:10px;color:var(--muted);gap:5px}
+.mini-progress{height:5px;background:#f0f0f3;border-radius:10px;
+ overflow:hidden;margin:13px 0 9px}
+.mini-progress span{display:block;height:100%;background:var(--orange);
+ border-radius:10px;transition:width .3s}
+.btn{border:0;border-radius:12px;padding:12px 15px;font-weight:800}
+.primary{background:var(--orange);color:white}
+.secondary{background:#fff0e3;color:#dc6500}
+.dark-btn{background:#292a33;color:white}
+.full{width:100%}
+.mascot-box{display:flex;align-items:center;gap:13px;background:#fff3e8;
+ border:1px solid #ffe0c4;border-radius:19px;padding:15px;margin-top:14px}
+.mascot-small{font-size:43px}
+.mascot-box strong{font-size:13px}
+.mascot-box p{font-size:12px;line-height:1.8;color:#6f6258;margin:5px 0 0}
+.field{display:flex;flex-direction:column;gap:7px;margin-bottom:13px}
+.field label{font-size:12px;font-weight:800}
+.field input,.field select{width:100%;min-width:0;padding:12px;
+ border:1px solid #e5e5eb;border-radius:11px;background:white;outline:none}
+.field input:focus,.field select:focus{border-color:var(--orange)}
+.form-card{margin-top:14px}
+.hidden{display:none!important}
+.history-row{display:flex;align-items:center;gap:11px;padding:13px 0;
+ border-bottom:1px solid var(--line)}
+.history-row:last-child{border-bottom:0}
+.history-icon{width:40px;height:40px;display:grid;place-items:center;
+ background:#fff0e3;border-radius:12px;font-size:19px;flex-shrink:0}
+.history-info{flex:1;min-width:0}
+.history-info strong{font-size:12px}
+.history-info p{font-size:10px;color:var(--muted);margin:5px 0 0}
+.amount{font-weight:900;color:var(--green);white-space:nowrap}
+.empty{text-align:center;padding:26px 10px;color:var(--muted);font-size:12px}
+.tabs{position:fixed;bottom:0;left:0;right:0;z-index:10;
+ display:flex;justify-content:center;background:#ffffffed;
+ border-top:1px solid #e9e9ee;backdrop-filter:blur(16px);
+ padding:9px 6px calc(9px + env(safe-area-inset-bottom))}
+.tab-inner{width:100%;max-width:650px;display:grid;
+ grid-template-columns:repeat(4,1fr);gap:5px}
+.tab{border:0;background:transparent;color:#8d8d98;border-radius:13px;
+ padding:8px 2px;font-size:10px;display:flex;flex-direction:column;
+ align-items:center;gap:5px}
+.tab span{font-size:20px}
+.tab.active{background:#fff0e3;color:#e66b00;font-weight:900}
+.note{font-size:10px;color:var(--muted);line-height:1.8}
+.toast{position:fixed;z-index:20;bottom:95px;left:50%;
+ transform:translateX(-50%);background:#292a33;color:white;
+ padding:12px 18px;border-radius:13px;box-shadow:var(--shadow);
+ max-width:90%;text-align:center}
+@media(min-width:650px){
+ header{margin-top:18px;border-radius:26px}
+ .grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+ .hero-card{grid-column:span 2}
+ main{padding:22px 26px}
+}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+  <div class="top">
+    <div class="brand">
+      <div class="logo">🍊</div>
+      <div><h1>Track Your Sales</h1><p>YOUR SALES. YOUR SUCCESS.</p></div>
+    </div>
+    <button class="avatar" onclick="editEmployee()">👤 الموظف</button>
+  </div>
+  <div class="welcome">
+    <div><h2>أهلاً يا بطل 👋<br><span id="employeeGreeting">جاهز تكسر التارجت؟</span></h2>
+      <p id="todayText"></p></div>
+    <div class="mascot" aria-label="أورنجاوي">🍊</div>
+  </div>
+</header>
+
+<main>
+<section id="homePage">
+  <div class="section-head"><div><h3>ملخص الأداء 🚀</h3>
+  <div class="sub">كل إنجاز صغير بيقربك من هدفك</div></div>
+  <button class="btn secondary" onclick="showPage('targets')">تعديل الأهداف</button></div>
+
+  <div class="grid">
+    <div class="card hero-card">
+      <div class="hero-top"><div><div class="eyebrow">تحقيق الخطوط الجديدة</div>
+        <div class="big-number"><span id="linePercent">0</span><span style="font-size:19px">%</span></div>
+      </div><div style="font-size:42px">🎯</div></div>
+      <div class="progress"><span id="lineBar"></span></div>
+      <div class="hero-foot"><span>تم <b id="lineDone">0</b> خط</span>
+      <span>المستهدف <b id="lineTarget">175</b> خط</span></div>
+    </div>
+    <div class="card">
+      <div class="stat-top"><span class="stat-icon">🏆</span><span class="pill" style="background:#e5f8ef;color:#14885a">إنجازك</span></div>
+      <div class="stat-label">إجمالي النقاط</div><div class="stat-value" id="totalPoints">0</div>
+      <div class="stat-bottom"><span>المتبقي</span><b id="pointsRemaining">0</b></div>
+    </div>
+  </div>
+
+  <div class="section-head"><div><h3>مؤشرات الأداء</h3>
+  <div class="sub">تابع كل منتج لوحده</div></div>
+  <button class="btn primary" onclick="showPage('add')">＋ تسجيل إنجاز</button></div>
+  <div class="grid" id="kpiGrid"></div>
+
+  <div class="mascot-box"><div class="mascot-small">🍊</div>
+    <div><strong>أورنجاوي بيقولك 💬</strong><p id="mascotMessage">يلا نبدأ يوم قوي! كل عملية بتفرق في نتيجتك.</p></div>
+  </div>
+
+  <div class="section-head"><div><h3>آخر الإنجازات</h3>
+  <div class="sub">تسجيلاتك الأخيرة على الجهاز</div></div></div>
+  <div class="card" id="recentList"></div>
+</section>
+
+<section id="addPage" class="hidden">
+  <div class="section-head"><div><h3>تسجيل إنجاز جديد ✨</h3>
+  <div class="sub">سجل إنجازك عشان التارجت يتحدث تلقائيًا</div></div></div>
+  <div class="card form-card">
+    <div class="field"><label for="product">نوع الإنجاز</label>
+      <select id="product"></select></div>
+    <div class="field"><label for="quantity">الكمية المحققة</label>
+      <input id="quantity" type="number" min="1" step="any" placeholder="مثلاً 5"></div>
+    <div class="field"><label for="entryDate">التاريخ</label>
+      <input id="entryDate" type="date"></div>
+    <div class="field"><label for="entryNote">ملاحظات (اختياري)</label>
+      <input id="entryNote" maxlength="120" placeholder="مثلاً: مبيعات الفترة المسائية"></div>
+    <button class="btn primary full" onclick="addEntry()">حفظ الإنجاز ✓</button>
+  </div>
+  <p class="note">بيتم تحديث الأرقام فورًا وحفظ التسجيلات على نفس المتصفح والجهاز.</p>
+</section>
+
+<section id="targetsPage" class="hidden">
+  <div class="section-head"><div><h3>إعدادات التارجت ⚙️</h3>
+  <div class="sub">تقدر تعدّل المستهدف حسب الشهر والشغل</div></div></div>
+  <div class="card">
+    <div class="field"><label for="employeeName">اسم الموظف</label>
+      <input id="employeeName" maxlength="60" placeholder="اسم الموظف"></div>
+    <div class="field"><label for="branchName">الفرع</label>
+      <input id="branchName" maxlength="60" placeholder="اسم الفرع"></div>
+    <div class="field"><label for="monthName">الشهر الحالي</label>
+      <input id="monthName" type="month"></div>
+    <div id="targetFields"></div>
+    <button class="btn primary full" onclick="saveSettings()">حفظ الإعدادات</button>
+    <button class="btn secondary full" style="margin-top:10px" onclick="exportData()">تصدير نسخة احتياطية JSON</button>
+    <div class="field" style="margin-top:14px"><label for="importFile">استعادة نسخة احتياطية</label>
+      <input type="file" id="importFile" accept=".json,application/json" onchange="importData(event)"></div>
+    <p class="note">التصدير يحفظ إعداداتك وسجل الإنجازات. احتفظ بالملف في مكان آمن.</p>
+  </div>
+</section>
+
+<section id="reportsPage" class="hidden">
+  <div class="section-head"><div><h3>التقارير 📊</h3>
+  <div class="sub">ملخص الإنجاز خلال الشهر المحدد</div></div></div>
+  <div class="grid" id="reportGrid"></div>
+  <div class="section-head"><div><h3>سجل العمليات بالكامل</h3></div>
+    <button class="btn secondary" onclick="clearEntries()">مسح السجل</button></div>
+  <div class="card" id="allEntries"></div>
+</section>
+</main>
+
+<nav class="tabs"><div class="tab-inner">
+  <button class="tab active" data-page="home" onclick="showPage('home')"><span>⌂</span>الرئيسية</button>
+  <button class="tab" data-page="targets" onclick="showPage('targets')"><span>🎯</span>التارجت</button>
+  <button class="tab" data-page="reports" onclick="showPage('reports')"><span>▤</span>التقارير</button>
+  <button class="tab" data-page="add" onclick="showPage('add')"><span>＋</span>إضافة</button>
+</div></nav>
+<div id="toast" class="toast hidden" role="status"></div>
+</div>
+
+<script>
+const DEFAULT_KPIS = [
+ {id:"lines",name:"الخطوط الجديدة",icon:"📱",target:175,weight:40,unit:"خط"},
+ {id:"wallets",name:"محافظ Orange Cash الجديدة",icon:"💳",target:158,weight:0,unit:"محفظة"},
+ {id:"existing",name:"المحافظ القائمة",icon:"👛",target:74,weight:15,unit:"محفظة"},
+ {id:"points",name:"النقاط",icon:"⭐",target:1737,weight:10,unit:"نقطة"},
+ {id:"postpaid",name:"خطوط Postpaid",icon:"📞",target:10,weight:10,unit:"خط"},
+ {id:"dsl",name:"DSL",icon:"🌐",target:1,weight:10,unit:"خط"},
+ {id:"quality",name:"الجودة",icon:"🛡️",target:100,weight:15,unit:"%"}
+];
+const STORE="trackYourSalesOrange_v1";
+let state;
+function freshState(){
+ return {settings:{employee:"",branch:"",month:currentMonth(),
+   kpis:DEFAULT_KPIS.map(k=>({...k}))},entries:[]};
+}
+function currentMonth(){return new Date().toISOString().slice(0,7)}
+function localDate(){
+ const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+}
+function load(){
+ try{
+  const raw=localStorage.getItem(STORE);
+  if(!raw)return freshState();
+  const parsed=JSON.parse(raw);
+  if(!parsed.settings||!Array.isArray(parsed.entries))return freshState();
+  parsed.settings.kpis=DEFAULT_KPIS.map(def=>{
+   const old=(parsed.settings.kpis||[]).find(k=>k.id===def.id);
+   return old?{...def,...old}: {...def};
+  });
+  return parsed;
+ }catch(e){return freshState()}
+}
+state=load();
+function persist(){localStorage.setItem(STORE,JSON.stringify(state))}
+function activeEntries(){
+ return state.entries.filter(e=>e.date&&e.date.slice(0,7)===state.settings.month);
+}
+function achieved(id){return activeEntries().filter(e=>e.id===id).reduce((s,e)=>s+Number(e.qty||0),0)}
+function kpi(id){return state.settings.kpis.find(k=>k.id===id)}
+function pct(id){
+ const k=kpi(id);return k&&Number(k.target)>0?achieved(id)/Number(k.target)*100:0;
+}
+function fmt(n){return Number(n.toFixed(2)).toLocaleString("en-US")}
+function safe(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function showToast(msg){
+ const t=document.getElementById("toast");t.textContent=msg;t.classList.remove("hidden");
+ clearTimeout(showToast.timer);showToast.timer=setTimeout(()=>t.classList.add("hidden"),2300);
+}
+function showPage(page){
+ ["home","add","targets","reports"].forEach(p=>
+  document.getElementById(p+"Page").classList.toggle("hidden",p!==page));
+ document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("active",b.dataset.page===page));
+ if(page==="targets")renderSettings();
+ if(page==="add")renderProductSelect();
+ if(page==="reports")renderReports();
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+function renderHome(){
+ const lines=kpi("lines");
+ document.getElementById("linePercent").textContent=fmt(pct("lines"));
+ document.getElementById("lineBar").style.width=Math.min(100,pct("lines"))+"%";
+ document.getElementById("lineDone").textContent=fmt(achieved("lines"));
+ document.getElementById("lineTarget").textContent=fmt(lines.target);
+ document.getElementById("totalPoints").textContent=fmt(achieved("points"));
+ document.getElementById("pointsRemaining").textContent=fmt(Math.max(0,kpi("points").target-achieved("points")));
+ document.getElementById("employeeGreeting").textContent=state.settings.employee||"جاهز تكسر التارجت؟";
+ document.getElementById("todayText").textContent=
+  new Date().toLocaleDateString("ar-EG",{weekday:"long",year:"numeric",month:"long",day:"numeric"});
+ document.getElementById("mascotMessage").textContent=
+  pct("lines")>=100?"يا وحش! حققت تارجت الخطوط. كمّل بنفس القوة! 🏆":
+  pct("lines")>=70?"أنت قريب جدًا من هدفك! فاضل شوية وتكسر الدنيا 💪":
+  "يلا نبدأ يوم قوي! كل عملية بتفرق في نتيجتك 🍊";
+ document.getElementById("kpiGrid").innerHTML=state.settings.kpis.map(k=>{
+  const done=achieved(k.id),percent=pct(k.id);
+  return `<article class="card">
+   <div class="stat-top"><span class="stat-icon">${safe(k.icon)}</span>
+   <span class="pill" style="background:#fff0e3;color:#df6900">${fmt(percent)}%</span></div>
+   <div class="stat-label">${safe(k.name)}</div>
+   <div class="stat-value">${fmt(done)} <span style="font-size:11px;color:#999;font-weight:400">${safe(k.unit)}</span></div>
+   <div class="mini-progress"><span style="width:${Math.min(100,Math.max(0,percent))}%"></span></div>
+   <div class="stat-bottom"><span>المستهدف ${fmt(k.target)}</span><b>متبقي ${fmt(Math.max(0,k.target-done))}</b></div>
+   <button class="btn secondary full" style="margin-top:13px" onclick="quickAdd('${k.id}')">＋ تسجيل</button>
+  </article>`;
+ }).join("");
+ const recent=activeEntries().slice().sort((a,b)=>b.createdAt.localeCompare(a.createdAt)).slice(0,4);
+ document.getElementById("recentList").innerHTML=recent.length?recent.map(entryHTML).join(""):'<div class="empty">لسه مفيش إنجازات مسجلة. ابدأ أول تسجيل ليك! 🚀</div>';
+}
+function entryHTML(e){
+ const k=kpi(e.id)||{name:e.id,icon:"📌",unit:""};
+ return `<div class="history-row"><div class="history-icon">${safe(k.icon)}</div>
+ <div class="history-info"><strong>${safe(k.name)}</strong>
+ <p>${safe(e.date)}${e.note?" • "+safe(e.note):""}</p></div>
+ <div class="amount">+${fmt(Number(e.qty))} ${safe(k.unit)}</div></div>`;
+}
+function renderProductSelect(selected){
+ document.getElementById("product").innerHTML=state.settings.kpis.map(k=>
+  `<option value="${safe(k.id)}">${safe(k.icon)} ${safe(k.name)}</option>`).join("");
+ if(selected)document.getElementById("product").value=selected;
+}
+function quickAdd(id){
+ showPage("add");renderProductSelect(id);
+ document.getElementById("quantity").focus();
+}
+function addEntry(){
+ const id=document.getElementById("product").value;
+ const qty=Number(document.getElementById("quantity").value);
+ const date=document.getElementById("entryDate").value;
+ const note=document.getElementById("entryNote").value.trim();
+ if(!kpi(id)||!Number.isFinite(qty)||qty<=0||!date){showToast("راجع نوع الإنجاز والكمية والتاريخ");return}
+ if(date.slice(0,7)!==state.settings.month){
+  showToast("التاريخ خارج الشهر المحدد. غيّر الشهر من إعدادات التارجت أولاً.");return;
+ }
+ state.entries.push({id,qty,date,note,createdAt:new Date().toISOString()});
+ persist();document.getElementById("quantity").value="";
+ document.getElementById("entryNote").value="";
+ renderHome();showToast("اتسجل الإنجاز بنجاح! عاش يا بطل 🍊");showPage("home");
+}
+function renderSettings(){
+ document.getElementById("employeeName").value=state.settings.employee||"";
+ document.getElementById("branchName").value=state.settings.branch||"";
+ document.getElementById("monthName").value=state.settings.month;
+ document.getElementById("targetFields").innerHTML=state.settings.kpis.map(k=>
+ `<div class="field"><label for="target-${safe(k.id)}">${safe(k.name)} — المستهدف</label>
+ <input id="target-${safe(k.id)}" type="number" min="0" step="any" value="${Number(k.target)}"></div>`).join("");
+}
+function saveSettings(){
+ const month=document.getElementById("monthName").value;
+ if(!month){showToast("اختار الشهر الأول");return}
+ const newTargets=state.settings.kpis.map(k=>({
+  ...k,target:Number(document.getElementById("target-"+k.id).value)
+ }));
+ if(newTargets.some(k=>!Number.isFinite(k.target)||k.target<0)){
+  showToast("المستهدف لازم يكون صفر أو أكتر");return;
+ }
+ state.settings.employee=document.getElementById("employeeName").value.trim();
+ state.settings.branch=document.getElementById("branchName").value.trim();
+ state.settings.month=month;state.settings.kpis=newTargets;
+ persist();renderHome();showToast("تم حفظ الإعدادات بنجاح");showPage("home");
+}
+function editEmployee(){showPage("targets");document.getElementById("employeeName").focus()}
+function renderReports(){
+ const items=state.settings.kpis;
+ document.getElementById("reportGrid").innerHTML=items.map(k=>
+ `<div class="card"><div class="stat-label">${safe(k.name)}</div>
+ <div class="stat-value">${fmt(pct(k.id))}%</div>
+ <div class="mini-progress"><span style="width:${Math.min(100,Math.max(0,pct(k.id)))}%"></span></div>
+ <div class="stat-bottom"><span>${fmt(achieved(k.id))} من ${fmt(k.target)}</span></div></div>`).join("");
+ const list=activeEntries().slice().sort((a,b)=>b.createdAt.localeCompare(a.createdAt));
+ document.getElementById("allEntries").innerHTML=list.length?list.map(e=>
+ entryHTML(e)+`<button class="btn secondary" style="margin:0 0 10px" onclick="deleteEntry('${safe(e.createdAt)}')">حذف التسجيل</button>`).join(""):'<div class="empty">لا توجد تسجيلات لهذا الشهر.</div>';
+}
+function deleteEntry(createdAt){
+ if(!confirm("متأكد إنك عايز تحذف التسجيل ده؟"))return;
+ state.entries=state.entries.filter(e=>e.createdAt!==createdAt);
+ persist();renderHome();renderReports();showToast("تم حذف التسجيل");
+}
+function clearEntries(){
+ if(!confirm("هتمسح ك
