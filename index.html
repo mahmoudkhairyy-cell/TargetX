@@ -170,6 +170,10 @@ main{padding:18px}
   <div class="card" style="margin-bottom:14px"><div class="stat-label">الإجمالي الموزون للتارجت</div>
   <div class="stat-value" id="overallScore">0%</div>
   <div class="stat-bottom"><span>مجموع الأوزان: <b id="weightTotal">100</b>%</span></div></div>
+  <div class="card" style="margin-bottom:14px"><div class="stat-label">الوتيرة المطلوبة للخطوط</div>
+  <div class="stat-value" id="paceLine">—</div>
+  <div class="stat-bottom"><span id="paceExpected">—</span><b id="paceStatus">—</b></div>
+  <p class="note" id="paceNote"></p></div>
   <div class="grid" id="kpiGrid"></div>
 
   <div class="mascot-box"><div class="mascot-small">🍊</div>
@@ -416,8 +420,36 @@ function showPage(page){
  if(page==="enc")renderEncyclopedia();
  window.scrollTo({top:0,behavior:"smooth"});
 }
+function renderPace(){
+ const lines=kpi("lines");
+ const m=state.settings.month;
+ const monthStart=m+"-01";
+ const last=new Date(Date.UTC(+m.slice(0,4),+m.slice(5,7),0)).toISOString().slice(0,10);
+ const pace=TargetXEngine.paceForMonth({monthStart,monthEnd:last,today:localDate(),rules:{}});
+ const req=TargetXEngine.requiredDaily(lines.target,achieved("lines"),pace.remainingWorkdays);
+ const actual=pct("lines");
+ document.getElementById("paceExpected").textContent=`المتوقع حتى اليوم: ${fmt(pace.expectedPct)}%`;
+ if(req.state==="done"){
+  document.getElementById("paceLine").textContent="🎉 تحقق";
+  document.getElementById("paceStatus").textContent="تم";
+  document.getElementById("paceNote").textContent="حققت تارجت الخطوط. كمّل بنفس القوة!";
+  return;
+ }
+ if(req.state==="no_workdays_left"){
+  document.getElementById("paceLine").textContent="—";
+  document.getElementById("paceStatus").textContent="خلصت أيام الشهر";
+  document.getElementById("paceNote").textContent=`فاضل ${fmt(req.remaining)} خط ومفيش أيام شغل متبقية في الشهر.`;
+  return;
+ }
+ document.getElementById("paceLine").textContent=`${fmt(req.perDay)} خط / يوم`;
+ const onTrack=actual>=pace.expectedPct;
+ document.getElementById("paceStatus").textContent=onTrack?"على المسار ✓":"متأخر شوية";
+ document.getElementById("paceNote").textContent=
+  `فاضل ${fmt(req.remaining)} خط على ${pace.remainingWorkdays} يوم شغل. الحساب بيعتبر كل أيام الأسبوع أيام شغل، عدّلها لو جدولك مختلف.`;
+}
 function renderHome(){
  const lines=kpi("lines");
+ renderPace();
  const overall=TargetXEngine.computeOverall(state.settings.kpis,Object.fromEntries(state.settings.kpis.map(k=>[k.id,achieved(k.id)])),{});
  document.getElementById("overallScore").textContent=fmt(overall.overall)+"%";
  document.getElementById("weightTotal").textContent=fmt(overall.weights.total);
