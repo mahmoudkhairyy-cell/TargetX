@@ -344,7 +344,7 @@ input,select,textarea{background:#fff!important;color:#1d1d26!important;border-c
       <div class="rh-herobig"><span id="overallScore">0%</span></div>
       <div class="rh-herosub" id="heroRemain">—</div>
       <div class="rh-pill" id="mascotMessage">يلا نبدأ!</div>
-      <div class="rh-pill rh-pill2"><span id="heroSales">0</span> إجمالي المبيعات</div>
+      <div class="rh-pill rh-pill2">💰 كوميشنك: <span id="heroComm">0</span> من <span id="heroCommMax">6,000</span> جنيه</div>
     </div>
   </div>
   <div class="rh-stats">
@@ -681,7 +681,9 @@ function renderHome(){
  set("lineTarget", fmt(lines.target));
  set("pointsRemainingLines", fmt(Math.max(0,(Number(lines.target)||0)-achieved("lines"))));
  set("heroRemain", "متبقي "+fmt(Math.max(0,(Number(lines.target)||0)-achieved("lines")))+" خط للتارجت");
- set("heroSales", fmt(activeEntries().reduce((s,e)=>s+Number(e.qty||0),0)));
+ const commMax=Number(state.settings.commissionMax)||6000;
+ set("heroComm", fmt(Math.round(Math.min(100,overall.overall)/100*commMax)));
+ set("heroCommMax", fmt(commMax));
  set("employeeGreeting", state.settings.employee||"—");
  set("branchName2", "📍 "+(state.settings.branch||""));
  set("weightTotal", fmt(overall.weights.total));
