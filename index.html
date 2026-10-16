@@ -394,6 +394,8 @@ h1,h2,h3,h4,button,input,select{font-family:"Cairo","Segoe UI",Tahoma,Arial,sans
   <div class="card">
     <div class="field"><label for="employeeName">اسم الموظف</label>
       <input id="employeeName" maxlength="60" placeholder="اسم الموظف"></div>
+    <div class="field"><label for="employeeCode">كود الموظف</label>
+      <input id="employeeCode" maxlength="30" placeholder="مثال: 12345" dir="ltr"></div>
     <div class="field"><label for="branchName">الفرع</label>
       <input id="branchName" maxlength="60" placeholder="اسم الفرع"></div>
     <div class="field"><label for="monthName">الشهر الحالي</label>
@@ -748,6 +750,7 @@ const warn=reviewEntry(id,qty,date);
 }
 function renderSettings(){
  document.getElementById("employeeName").value=state.settings.employee||"";
+ document.getElementById("employeeCode").value=state.settings.empCode||"";
  document.getElementById("branchName").value=state.settings.branch||"";
  document.getElementById("monthName").value=state.settings.month;
  document.getElementById("commissionMax").value=state.settings.commissionMax||6000;
@@ -766,6 +769,7 @@ function saveSettings(){
   showToast("المستهدف لازم يكون صفر أو أكتر");return;
  }
  state.settings.employee=document.getElementById("employeeName").value.trim();
+ state.settings.empCode=document.getElementById("employeeCode").value.trim();
  state.settings.branch=document.getElementById("branchName").value.trim();
  const comm=Number(document.getElementById("commissionMax").value);
  if(!(comm>0)){showToast("الكوميشن لازم يكون رقم أكبر من صفر");return}
