@@ -272,70 +272,85 @@ input,select,textarea{background:#fff!important;color:#1d1d26!important;border-c
 .mr-wave{transform-box:fill-box;transform-origin:center bottom;animation:txWaveArm 1.2s ease-in-out infinite}
 .mr-float{animation:txFloatUp 1.8s ease-out infinite}
 .mr-svg{width:100%;height:100%;overflow:visible}
+
+.rh{background:#fff;border-bottom:1px solid #f1e4d6;padding:12px 16px;color:#1d1d26}
+.rh-top{display:flex;justify-content:space-between;align-items:center}
+.rh-brand{display:flex;align-items:center;gap:10px}
+.rh-brand .logo{width:46px;height:46px}
+.rh-brand b{display:block;font-size:17px}
+.rh-brand small{color:#7a6f66;font-size:11px}
+.rh-icons{display:flex;gap:10px}
+.rh-ic{width:44px;height:44px;border-radius:50%;border:0;background:#f5f1ec;font-size:18px}
+.rh-hello{padding:18px 16px 4px}
+.rh-title{font-size:26px;font-weight:900;margin:0;line-height:1.3}
+.rh-name{color:#4a4640;font-weight:700;margin-top:4px}
+.rh-loc{color:#7a6f66;font-size:14px}
+.rh-hero{margin:16px;background:linear-gradient(135deg,#ff8a2b,#ff6a00);border-radius:28px;color:#fff;padding:20px;display:flex;gap:14px;align-items:center;box-shadow:0 14px 30px #ff790033}
+.rh-ringwrap{position:relative;width:120px;height:120px;flex:none}
+.rh-ring{width:100%;height:100%}
+.rh-ringtxt{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:900}
+.rh-herotxt{flex:1;text-align:right}
+.rh-herolabel{font-size:13px;opacity:.9}
+.rh-herobig{font-size:44px;font-weight:900;line-height:1.05}
+.rh-herosub{font-size:13px;opacity:.9}
+.rh-pill{margin-top:8px;background:rgba(255,255,255,.22);border-radius:14px;padding:8px 12px;font-size:13px;font-weight:700}
+.rh-pill2{background:rgba(255,255,255,.14)}
+.rh-stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:0 16px}
+.rh-stat{background:#fff;border:1px solid #f1e4d6;border-radius:20px;padding:14px;text-align:right}
+.rh-stat-l{color:#7a6f66;font-size:13px}
+.rh-stat-v{font-size:34px;font-weight:900}
+.rh-stat-s{color:#7a6f66;font-size:12px}
+.rh-sec-title{margin:22px 16px 10px;font-size:20px;font-weight:900;text-align:right}
+.rh-kpis{display:flex;flex-direction:column;gap:12px;margin:0 16px}
+.rh-kpi{background:#fff;border:1px solid #f1e4d6;border-radius:22px;padding:16px}
+.rh-kpi-top{display:flex;align-items:center;gap:10px}
+.rh-kpi-name{flex:1;text-align:right;font-weight:800;font-size:17px}
+.rh-kpi-ic{width:40px;height:40px;border-radius:14px;background:#fff4ea;display:flex;align-items:center;justify-content:center}
+.rh-kpi-pct{color:#ff7900;font-weight:900;font-size:15px}
+.rh-kpi-row{display:flex;justify-content:space-between;margin:12px 0 8px;font-size:14px;color:#4a4640}
+.rh-bar{height:8px;border-radius:8px;background:#f3e6da;overflow:hidden}
+.rh-bar span{display:block;height:100%;background:linear-gradient(90deg,#ff9d38,#ff7900);border-radius:8px}
+.rh-kpi-foot{display:flex;justify-content:space-between;margin-top:8px;font-size:12px;color:#ff7900;font-weight:700}
+.rh-reports{margin:16px}
+.tx-mascot-btn{left:auto!important;right:6px!important;bottom:104px!important}
 </style>
 </head>
 <body>
 <div class="app">
-<header>
-  <div class="top">
-    <div class="brand">
-      <div class="logo"><img src="data:image/jpeg;base64,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" alt="TargetX logo" style="width:100%;height:100%;object-fit:cover;border-radius:12px"></div>
-      <div><h1>تارجت إكس · TargetX</h1><p>YOUR SALES. YOUR SUCCESS.</p></div>
-    </div>
-    <button class="avatar" onclick="editEmployee()">👤 الموظف</button>
-  </div>
-  <div class="welcome">
-    <div><h2>أهلاً يا بطل 👋<br><span id="employeeGreeting">جاهز تكسر التارجت؟</span></h2>
-      <p id="todayText"></p></div>
-    <div class="mascot" aria-label="تارجت إكس">🍊</div>
+<header class="rh">
+  <div class="rh-top">
+    <div class="rh-icons"><button class="rh-ic" aria-label="Theme">🌙</button><button class="rh-ic" aria-label="Notifications" onclick="showPage('today')">🔔</button></div>
+    <div class="rh-brand"><div class="logo"><img src="data:image/jpeg;base64,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" alt="TargetX logo" style="width:100%;height:100%;object-fit:cover;border-radius:12px"></div><div><b>تارجت إكس</b><small>by Mahmoud Khairy</small></div></div>
   </div>
 </header>
 
 <main>
 <section id="homePage">
-  <div class="dash" id="dash"></div>
-  <div class="section-head"><div><h3>ملخص الأداء 🚀</h3>
-  <div class="sub">كل إنجاز صغير بيقربك من هدفك</div></div>
-  <button class="btn secondary" onclick="showPage('targets')">تعديل الأهداف</button>
-  <button class="btn secondary" onclick="showPage('enc')" style="margin-top:8px">📚 موسوعة SR</button></div>
-
-  <div class="grid">
-    <div class="card hero-card">
-      <div class="hero-top"><div><div class="eyebrow">تحقيق الخطوط الجديدة</div>
-        <div class="big-number"><span id="linePercent">0</span><span style="font-size:19px">%</span></div>
-        <svg class="tx-ring" viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="50" stroke="#ffffff33"/><circle id="lineRing" cx="60" cy="60" r="50" stroke="#ff9d38" stroke-linecap="round" stroke-dasharray="314" stroke-dashoffset="314" transform="rotate(-90 60 60)"/></svg>
-      </div><div style="font-size:42px">🎯</div></div>
-      <div class="progress"><span id="lineBar"></span></div>
-      <div class="hero-foot"><span>تم <b id="lineDone">0</b> خط</span>
-      <span>المستهدف <b id="lineTarget">175</b> خط</span></div>
+  <div class="rh-hello"><h2 class="rh-title">لسه بتحسبها؟ يلا نكمّل التارجت!</h2>
+    <div class="rh-name" id="employeeGreeting">—</div>
+    <div class="rh-loc"><span id="branchName2">📍</span></div></div>
+  <div class="rh-hero">
+    <div class="rh-ringwrap">
+      <svg viewBox="0 0 120 120" class="rh-ring"><circle cx="60" cy="60" r="50" fill="none" stroke="rgba(255,255,255,.25)" stroke-width="12"/><circle id="heroRing" cx="60" cy="60" r="50" fill="none" stroke="#fff" stroke-width="12" stroke-linecap="round" stroke-dasharray="314" stroke-dashoffset="314" transform="rotate(-90 60 60)"/></svg>
+      <div class="rh-ringtxt"><span id="heroRingPct">0%</span></div>
     </div>
-    <div class="card">
-      <div class="stat-top"><span class="stat-icon">🏆</span><span class="pill" style="background:#e5f8ef;color:#14885a">إنجازك</span></div>
-      <div class="stat-label">إجمالي النقاط</div><div class="stat-value" id="totalPoints">0</div>
-      <div class="stat-bottom"><span>المتبقي</span><b id="pointsRemaining">0</b></div>
+    <div class="rh-herotxt">
+      <div class="rh-herolabel">إجمالي التارجت الشهري</div>
+      <div class="rh-herobig"><span id="overallScore">0%</span></div>
+      <div class="rh-herosub" id="heroRemain">—</div>
+      <div class="rh-pill" id="mascotMessage">يلا نبدأ!</div>
+      <div class="rh-pill rh-pill2"><span id="heroSales">0</span> إجمالي المبيعات</div>
     </div>
   </div>
-
-  <div class="section-head"><div><h3>مؤشرات الأداء</h3>
-  <div class="sub">تابع كل منتج لوحده</div></div>
-  <button class="btn primary" onclick="showPage('add')">＋ تسجيل إنجاز</button></div>
-  <div class="card" style="margin-bottom:14px"><div class="stat-label">الإجمالي الموزون للتارجت</div>
-  <div class="stat-value" id="overallScore">0%</div>
-  <div class="stat-bottom"><span>مجموع الأوزان: <b id="weightTotal">100</b>%</span></div></div>
-  <div class="card" style="margin-bottom:14px"><div class="stat-label">المطلوب يومياً للخطوط</div>
-  <div class="stat-value" id="paceLine">—</div>
-  <div class="stat-bottom"><span id="paceExpected">—</span><b id="paceStatus">—</b></div>
-  <p class="note" id="paceNote"></p></div>
-  <div class="grid" id="kpiGrid"></div>
-
-  <div class="mascot-box"><div class="mascot-small">🍊</div>
-    <div><strong>تارجت إكس بيقولك 💬</strong><p id="mascotMessage">يلا نبدأ يوم قوي! كل عملية بتفرق في نتيجتك.</p></div>
+  <div class="rh-stats">
+    <div class="rh-stat"><div class="rh-stat-l">الخطوط المحققة 📱</div><div class="rh-stat-v" id="lineDone">0</div><div class="rh-stat-s">من <span id="lineTarget">0</span></div></div>
+    <div class="rh-stat"><div class="rh-stat-l">المتبقي للخطوط 🎯</div><div class="rh-stat-v" id="pointsRemainingLines">0</div><div class="rh-stat-s">خط</div></div>
   </div>
-
-  <div class="section-head"><div><h3>آخر الإنجازات</h3>
-  <div class="sub">تسجيلاتك الأخيرة على الجهاز</div></div></div>
-  <div class="card" id="recentList"></div>
-<div id="reportsBlock" class="reports-block">
+  <div class="rh-sec-title">مؤشرات الأداء</div>
+  <div id="kpiGrid" class="rh-kpis"></div>
+  <!-- hidden ids kept for compatibility -->
+  <div hidden><span id="linePercent"></span><span id="lineRing"></span><span id="lineBar"></span><span id="totalPoints"></span><span id="pointsRemaining"></span><span id="weightTotal"></span><span id="todayText"></span><span id="paceLine"></span><span id="paceExpected"></span><span id="paceStatus"></span><p id="paceNote"></p><div id="dash"></div></div>
+  <div class="rh-reports"><div id="reportsBlock" class="reports-block">
   <div class="section-head"><div><h3>التقارير 📊</h3>
   <div class="sub">ملخص الإنجاز خلال الشهر المحدد</div></div></div>
   <div class="grid" id="reportGrid"></div>
@@ -343,8 +358,9 @@ input,select,textarea{background:#fff!important;color:#1d1d26!important;border-c
     <button class="btn secondary" onclick="clearEntries()">مسح السجل</button></div>
   <div class="card" id="allEntries"></div>
 </div>
+</div>
+</div>
 </section>
-
 <section id="todayPage" class="hidden">
   <div class="card" style="margin-bottom:14px;text-align:center"><div class="stat-label">مطلوب منك تبيع النهارده</div><div class="stat-value" id="todayNeed">—</div></div>
   <div class="section-head"><div><h3>مبيعات اليوم</h3></div></div>
@@ -436,11 +452,11 @@ input,select,textarea{background:#fff!important;color:#1d1d26!important;border-c
   <div class="tx-askrow"><input id="txInput" placeholder="اسأل تارجت إكس... Ask me" onkeydown="if(event.key==='Enter')sendMrTarget()"><button class="btn primary" onclick="sendMrTarget()">إرسال</button></div>
 </div>
 <nav class="tabs"><div class="tab-inner">
-  <button class="tab active" data-page="home" onclick="showPage('home')"><span>⌂</span>الرئيسية<small>Home</small></button>
-  <button class="tab" data-page="today" onclick="showPage('today')"><span>📅</span>اليوم<small>Today</small></button>
+  <button class="tab" data-page="today" onclick="showPage('today')"><span>☰</span>المزيد<small>More</small></button>
+  <button class="tab" data-page="enc" onclick="showPage('enc')"><span>📖</span>الموسوعة<small>Encyclopedia</small></button>
+  <button class="tab" data-page="add" onclick="showPage('add')"><span>＋</span>تسجيل<small>Add</small></button>
   <button class="tab" data-page="targets" onclick="showPage('targets')"><span>🎯</span>التارجت<small>Targets</small></button>
-  <button class="tab" data-page="ai" onclick="showPage('ai')"><span>✦</span>مساعد AI<small>Assistant</small></button>
-  <button class="tab" data-page="add" onclick="showPage('add')"><span>＋</span>سجّل<small>Add</small></button>
+  <button class="tab active" data-page="home" onclick="showPage('home')"><span>⌂</span>الرئيسية<small>Home</small></button>
 </div></nav>
 <div id="toast" class="toast hidden" role="status"></div>
 </div>
@@ -637,42 +653,40 @@ function renderPace(){
 }
 function renderHome(){
  const lines=kpi("lines");
- renderPace();
  renderMascot();
- renderDash();
  renderReports();
- const overall=TargetXEngine.computeOverall(state.settings.kpis,Object.fromEntries(state.settings.kpis.map(k=>[k.id,achieved(k.id)])),{});
- document.getElementById("overallScore").textContent=fmt(overall.overall)+"%";
- document.getElementById("weightTotal").textContent=fmt(overall.weights.total);
- document.getElementById("linePercent").textContent=fmt(pct("lines"));
- document.getElementById("lineRing").setAttribute("stroke-dashoffset",String(314-314*Math.min(1,Math.max(0,pct("lines"))/100)));
- document.getElementById("lineBar").style.width=Math.min(100,pct("lines"))+"%";
- document.getElementById("lineDone").textContent=fmt(achieved("lines"));
- document.getElementById("lineTarget").textContent=fmt(lines.target);
- document.getElementById("totalPoints").textContent=fmt(achieved("points"));
- document.getElementById("pointsRemaining").textContent=fmt(Math.max(0,kpi("points").target-achieved("points")));
- document.getElementById("employeeGreeting").textContent=state.settings.employee||"جاهز تكسر التارجت؟";
- document.getElementById("todayText").textContent=
-  new Date().toLocaleDateString("ar-EG",{weekday:"long",year:"numeric",month:"long",day:"numeric"});
- document.getElementById("mascotMessage").textContent=
-  pct("lines")>=100?"يا وحش! خلصت تارجت الخطوط. كمّل كده! 🏆":
-  pct("lines")>=70?"إنت قريب أوي من الهدف! فاضل شوية وتكسّرها 💪":
-  "يلا بينا نبدأ يومنا! كل عملية بتفرق في النتيجة 🍊";
- document.getElementById("kpiGrid").innerHTML=state.settings.kpis.map(k=>{
-  const done=achieved(k.id),percent=pct(k.id);
-  return `<article class="card">
-   <div class="stat-top"><span class="stat-icon">${safe(k.icon)}</span>
-   <span class="pill" style="background:#fff0e3;color:#df6900">${fmt(percent)}%</span></div>
-   <div class="stat-label">${safe(k.name)}</div>
-   <div class="stat-value">${fmt(done)} <span style="font-size:11px;color:#999;font-weight:400">${safe(k.unit)}</span></div>
-   <div class="mini-progress"><span style="width:${Math.min(100,Math.max(0,percent))}%"></span></div>
-   <div class="stat-bottom"><span>المستهدف ${fmt(k.target)}</span><b>متبقي ${fmt(Math.max(0,k.target-done))}</b></div>
-   <button class="btn secondary full" style="margin-top:13px" onclick="quickAdd('${k.id}')">＋ تسجيل</button>
+ const kpis=state.settings.kpis;
+ const overall=TargetXEngine.computeOverall(kpis,Object.fromEntries(kpis.map(k=>[k.id,achieved(k.id)])),{});
+ const lp=pct("lines");
+ const set=(id,v)=>{const el=document.getElementById(id); if(el) el.textContent=v;};
+ set("overallScore", fmt(overall.overall)+"%");
+ set("heroRingPct", fmt(overall.overall)+"%");
+ const ring=document.getElementById("heroRing");
+ if(ring) ring.setAttribute("stroke-dashoffset",String(314-314*Math.min(1,Math.max(0,overall.overall)/100)));
+ set("linePercent", fmt(lp));
+ set("lineDone", fmt(achieved("lines")));
+ set("lineTarget", fmt(lines.target));
+ set("pointsRemainingLines", fmt(Math.max(0,(Number(lines.target)||0)-achieved("lines"))));
+ set("heroRemain", "متبقي "+fmt(Math.max(0,(Number(lines.target)||0)-achieved("lines")))+" خط للتارجت");
+ set("heroSales", fmt(activeEntries().reduce((s,e)=>s+Number(e.qty||0),0)));
+ set("employeeGreeting", state.settings.employee||"—");
+ set("branchName2", "📍 "+(state.settings.branch||""));
+ set("weightTotal", fmt(overall.weights.total));
+ set("mascotMessage",
+  lp>=100?"يا وحش! خلصت تارجت الخطوط 🏆":
+  lp>=70?"إنت قريب أوي! فاضل شوية 💪":
+  "يلا بينا نبدأ! كل عملية بتفرق 🍊");
+ document.getElementById("kpiGrid").innerHTML=kpis.map(k=>{
+  const done=achieved(k.id), percent=pct(k.id);
+  return `<article class="rh-kpi">
+   <div class="rh-kpi-top"><span class="rh-kpi-pct">${fmt(percent)}%</span><span class="rh-kpi-name">${safe(k.name)}</span><span class="rh-kpi-ic">${safe(k.icon)}</span></div>
+   <div class="rh-kpi-row"><span>المستهدف: <b>${fmt(k.target)}</b></span><span>المحقق: <b>${fmt(done)}</b></span></div>
+   <div class="rh-bar"><span style="width:${Math.min(100,Math.max(0,percent))}%"></span></div>
+   <div class="rh-kpi-foot"><span>الوزن: ${fmt(k.weight)}%</span><span>مساهمة: ${fmt(overall.contributions?.[k.id]??0)}%</span></div>
   </article>`;
  }).join("");
- const recent=activeEntries().slice().sort((a,b)=>b.createdAt.localeCompare(a.createdAt)).slice(0,4);
- document.getElementById("recentList").innerHTML=recent.length?recent.map(entryHTML).join(""):'<div class="empty">لسه مفيش إنجازات مسجلة. ابدأ أول تسجيل ليك! 🚀</div>';
 }
+
 function entryHTML(e){
  const k=kpi(e.id)||{name:e.id,icon:"📌",unit:""};
  return `<div class="history-row"><div class="history-icon">${safe(k.icon)}</div>
