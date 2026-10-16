@@ -312,6 +312,11 @@ input,select,textarea{background:#fff!important;color:#1d1d26!important;border-c
 .rh-bar span{display:block;height:100%;background:linear-gradient(90deg,#ff9d38,#ff7900);border-radius:8px}
 .rh-kpi-foot{display:flex;justify-content:space-between;margin-top:8px;font-size:12px;color:#ff7900;font-weight:700}
 .rh-reports{margin:16px}
+.tabs .tab-inner{grid-template-columns:repeat(5,1fr)!important}
+.rh-tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:0 0 14px}
+.rh-tile{display:flex;flex-direction:column;gap:4px;background:#fff;border:1px solid #f1e4d6;border-radius:20px;padding:16px;text-decoration:none;color:#1d1d26;font-size:24px}
+.rh-tile b{font-size:16px}
+.rh-tile small{color:#7a6f66;font-size:12px}
 .tx-mascot-btn{left:auto!important;right:6px!important;bottom:104px!important}
 </style>
 </head>
@@ -357,7 +362,6 @@ input,select,textarea{background:#fff!important;color:#1d1d26!important;border-c
   <div class="section-head"><div><h3>سجل العمليات بالكامل</h3></div>
     <button class="btn secondary" onclick="clearEntries()">مسح السجل</button></div>
   <div class="card" id="allEntries"></div>
-</div>
 </div>
 </div>
 </section>
@@ -410,9 +414,18 @@ input,select,textarea{background:#fff!important;color:#1d1d26!important;border-c
 
 
 <section id="encPage" class="hidden">
-  <div class="card" style="margin-bottom:14px"><h3 style="margin:0 0 8px">📞 أرقام الهانت</h3><div id="huntList"></div></div>
-  <div class="card" style="margin-bottom:14px"><h3 style="margin:0 0 8px">📦 الباقات</h3><div id="pkgList"></div></div>
-  <div class="card" style="margin-bottom:14px"><h3 style="margin:0 0 8px">✉️ الإيميلات</h3><p class="note">مفيش إيميلات لسه، ابعتها وأضيفها هنا.</p></div>
+  <div class="rh-tiles">
+    <a class="rh-tile" href="#pkgFree">⚡<b>FREEmax</b><small>باقات فري ماكس</small></a>
+    <a class="rh-tile" href="#encSR">🗄️<b>موسوعة الـ SR</b><small>كل الأكواد</small></a>
+    <a class="rh-tile" href="#pkgGo">📱<b>Go</b><small>Go Monthly</small></a>
+    <a class="rh-tile" href="#pkgPrem">👑<b>Premier</b><small>باقات Premier</small></a>
+    <a class="rh-tile" href="#huntSec">📞<b>أرقام الهانت</b><small>جهات التواصل</small></a>
+    <a class="rh-tile" href="#pkgHome">📶<b>Home Wireless</b><small>باقات الإنترنت</small></a>
+    <a class="rh-tile" href="#mailSec">✉️<b>E-Mails</b><small>الإيميلات</small></a>
+  </div>
+  <div class="card" id="huntSec" style="margin-bottom:14px"><h3 style="margin:0 0 8px">📞 أرقام الهانت</h3><div id="huntList"></div></div>
+  <div class="card" id="pkgSec" style="margin-bottom:14px"><h3 style="margin:0 0 8px">📦 الباقات</h3><div id="pkgList"></div></div>
+  <div class="card" id="mailSec" style="margin-bottom:14px"><h3 style="margin:0 0 8px">✉️ الإيميلات</h3><p class="note">مفيش إيميلات لسه، ابعتها وأضيفها هنا.</p></div>
   <div class="section-head"><div><h3>موسوعة SR 📚</h3>
   <div class="sub">ابحث بالكود أو بالعنوان، وانسخ السجل بضغطة</div></div></div>
   <div class="card">
@@ -1020,10 +1033,10 @@ function aiReply(q){
 }
 
 const HUNTS_DATA=[["Cs Hants Orange", [["Activation Team", "01223202818"], ["Prepaid Team", "01223204321"], ["Activation Data Line", "01223200252"], ["Complain Pre", "01223204604"], ["Save Team", "01223204602"], ["Complain Post", "01223204603"], ["Data Team", "01223202062"], ["Points", "01223204786"], ["Team 110", "01223202870"], ["Data Gathering", "01223202995"], ["Activation Corp", "01223204260"], ["POS", "01223202828"], ["Credit Corp", "01223202849"], ["First Class", "01223202976"], ["Fraud Team", "01223206299"], ["STK", "01223204323"], ["SPOC", "01223202102"], ["Credit", "01223202113"], ["Save Team Corp", "01223204959"], ["MNP Team", "01223204554"], ["MNP Prepaid", "01223200006"], ["MNP Postpaid", "01223204602"], ["MNP Corporate", "01223204140"], ["Prepaid Activation", "01223202995"], ["RSS TEAM", "01223204209"]]], ["Cs Hants ADSL", [["Activation & TE Portal", "01223200737"], ["Finance", "01223200383"], ["Tariff Migration", "01223200717"], ["Retention Team (1)", "01223200711"], ["Retention Team (2)", "01223200712"], ["Technical Support (1)", "01223200359"], ["Technical Support (2)", "01223208100"], ["Fixed Activation", "01223209021"]]]];
-const PKG_DATA=[["FREEmax", [["Free Max 52", "1,800", "50 MB", "74.29"], ["Free Max 80", "3,000", "50 MB", "114.29"], ["Free Max 115", "5,000", "50 MB", "164.29"], ["Free Max 175", "9,000", "50 MB", "250"], ["Free Max 230", "12,000", "50 MB", "328.57"], ["Free Max 345", "20,000", "50 MB", "492.86"]]], ["Orange Premier", [["Premier Lite"], ["Premier Plus"], ["Premier Select"], ["Premier Ultra"], ["Premier Platinum"]]], ["Home DSL", [["Home DSL 330", "30 Mbps · 200 GB · 376.2 ج / شهرياً"], ["Home DSL 150"]]], ["Home Wireless", [["Home Wireless 40 GB", "40 GB", "—"], ["Home Wireless 70 GB", "70 GB", "—"], ["Home Wireless 140 GB", "140 GB", "—"], ["Home Wireless 250 GB", "250 GB", "—"], ["Home Wireless 350 GB", "350 GB", "—"], ["Home Wireless 400 GB", "400 GB", "—"], ["Home Wireless 1000 GB", "1000 GB", "—"]]]];
+const PKG_DATA=[["FREEmax", [["Free Max 52", "1,800", "50 MB", "74.29"], ["Free Max 80", "3,000", "50 MB", "114.29"], ["Free Max 115", "5,000", "50 MB", "164.29"], ["Free Max 175", "9,000", "50 MB", "250"], ["Free Max 230", "12,000", "50 MB", "328.57"], ["Free Max 345", "20,000", "50 MB", "492.86"]]], ["Orange Premier", [["Premier Lite"], ["Premier Plus"], ["Premier Select"], ["Premier Ultra"], ["Premier Platinum"]]], ["Go Monthly", [["Go 23", "750 MB · L.E 32.86"], ["Go 37", "1400 MB · L.E 52.87"], ["Go 58", "2500 MB · L.E 82.86"], ["Go 92", "4250 MB · L.E 131.44"], ["Go 120", "6000 MB · L.E 171.43"], ["Go 180", "10000 MB · L.E 257.15"], ["Go 300", "18000 MB · L.E 428.58"], ["Go 450", "29000 MB · L.E 642.86"], ["Go 600", "45000 MB · L.E 857.15"]]], ["Home DSL", [["Home DSL 330", "30 Mbps · 200 GB · 376.2 ج / شهرياً"], ["Home DSL 150"]]], ["Home Wireless", [["Home Wireless 40 GB", "40 GB", "—"], ["Home Wireless 70 GB", "70 GB", "—"], ["Home Wireless 140 GB", "140 GB", "—"], ["Home Wireless 250 GB", "250 GB", "—"], ["Home Wireless 350 GB", "350 GB", "—"], ["Home Wireless 400 GB", "400 GB", "—"], ["Home Wireless 1000 GB", "1000 GB", "—"]]]];
 function renderEncExtra(){
  document.getElementById("huntList").innerHTML=HUNTS_DATA.map(([g,rows])=>`<h4 style="margin:10px 0 6px;color:#e66b00">${safe(g)}</h4>`+rows.map(([n,num])=>`<div class="stat-bottom" style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #f1e4d6"><span>${safe(n)}</span><b dir="ltr" onclick="copyText('${num}')" style="cursor:pointer">${num}</b></div>`).join("")).join("");
- document.getElementById("pkgList").innerHTML=PKG_DATA.map(([g,rows])=>`<h4 style="margin:10px 0 6px;color:#e66b00">${safe(g)}</h4>`+rows.map(r=>`<div style="padding:6px 0;border-bottom:1px solid #f1e4d6"><b>${safe(r[0])}</b><div class="note" style="margin:2px 0 0">${r.slice(1).map(safe).join(" · ")}</div></div>`).join("")).join("");
+ document.getElementById("pkgList").innerHTML=PKG_DATA.map(([g,rows])=>`<h4 id="${({"FREEmax":"pkgFree","Go Monthly":"pkgGo","Orange Premier":"pkgPrem","Home Wireless":"pkgHome"})[g]||""}" style="margin:10px 0 6px;color:#e66b00">${safe(g)}</h4>`+rows.map(r=>`<div style="padding:6px 0;border-bottom:1px solid #f1e4d6"><b>${safe(r[0])}</b><div class="note" style="margin:2px 0 0">${r.slice(1).map(safe).join(" · ")}</div></div>`).join("")).join("");
 }
 function copyText(t){ if(navigator.clipboard) navigator.clipboard.writeText(t).then(()=>showToast("اتنسخ ✓")); }
 function renderToday(){
