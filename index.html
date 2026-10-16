@@ -771,78 +771,65 @@ function mascotState(){
 function mascotSVG(st,uid){
  uid=uid||"m";
  const mood=({idle:"idle",happy:"happy",near:"near",concern:"concern",celebrate:"celebrate"})[st]||"idle";
+ const eyeGlow='filter="url(#'+uid+'f)"';
  const eyes={
-  idle:'<rect x="38" y="41" width="8" height="12" rx="4" fill="#ffb35c" filter="url(#'+uid+'f)"/><rect x="66" y="41" width="8" height="12" rx="4" fill="#ffb35c" filter="url(#'+uid+'f)"/>',
-  happy:'<path d="M38 50 Q42 41 46 50" stroke="#ffb35c" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#'+uid+'f)"/><path d="M66 50 Q70 41 74 50" stroke="#ffb35c" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#'+uid+'f)"/>',
-  near:'<path d="M42 52 C36 46 36 40 41 40 C44 40 45 43 45 43 C45 43 46 40 49 40 C54 40 54 46 42 52Z" fill="#ff7a8a"/><path d="M70 52 C64 46 64 40 69 40 C72 40 73 43 73 43 C73 43 74 40 77 40 C82 40 82 46 70 52Z" fill="#ff7a8a"/>',
-  concern:'<rect x="38" y="44" width="8" height="10" rx="4" fill="#ffb35c" filter="url(#'+uid+'f)"/><rect x="66" y="44" width="8" height="10" rx="4" fill="#ffb35c" filter="url(#'+uid+'f)"/><path d="M34 36 L46 40" stroke="#ff7900" stroke-width="2.4" stroke-linecap="round"/><path d="M86 36 L74 40" stroke="#ff7900" stroke-width="2.4" stroke-linecap="round"/>',
-  celebrate:'<path d="M42 40 L44 45 L49 45 L45 48 L46.6 53 L42 50 L37.4 53 L39 48 L35 45 L40 45Z" fill="#ffb35c" filter="url(#'+uid+'f)"/><path d="M70 40 L72 45 L77 45 L73 48 L74.6 53 L70 50 L65.4 53 L67 48 L63 45 L68 45Z" fill="#ffb35c" filter="url(#'+uid+'f)"/>'
+  idle:'<ellipse cx="44" cy="62" rx="7" ry="9" fill="#ffb35c" '+eyeGlow+'/><ellipse cx="76" cy="62" rx="7" ry="9" fill="#ffb35c" '+eyeGlow+'/>',
+  happy:'<path d="M37 64 Q44 54 51 64" stroke="#ffb35c" stroke-width="3.4" fill="none" stroke-linecap="round" '+eyeGlow+'/><path d="M69 64 Q76 54 83 64" stroke="#ffb35c" stroke-width="3.4" fill="none" stroke-linecap="round" '+eyeGlow+'/>',
+  near:'<path d="M40 68 C32 60 32 52 39 52 C43 52 44 56 44 56 C44 56 45 52 49 52 C56 52 56 60 40 68Z" fill="#ff7a8a"/><path d="M72 68 C64 60 64 52 71 52 C75 52 76 56 76 56 C76 56 77 52 81 52 C88 52 88 60 72 68Z" fill="#ff7a8a"/>',
+  concern:'<ellipse cx="44" cy="64" rx="6.4" ry="7.6" fill="#ffb35c" '+eyeGlow+'/><ellipse cx="76" cy="64" rx="6.4" ry="7.6" fill="#ffb35c" '+eyeGlow+'/><path d="M32 52 L50 58" stroke="#ff7900" stroke-width="3" stroke-linecap="round"/><path d="M88 52 L70 58" stroke="#ff7900" stroke-width="3" stroke-linecap="round"/>',
+  celebrate:'<path d="M44 52 L47 60 L55 60 L49 65 L51 73 L44 68 L37 73 L39 65 L33 60 L41 60Z" fill="#ffb35c" '+eyeGlow+'/><path d="M76 52 L79 60 L87 60 L81 65 L83 73 L76 68 L69 73 L71 65 L65 60 L73 60Z" fill="#ffb35c" '+eyeGlow+'/>'
  }[mood];
  const mouth={
-  idle:'<path d="M50 60 Q60 66 70 60" stroke="#ffb35c" stroke-width="2.6" fill="none" stroke-linecap="round" filter="url(#'+uid+'f)"/>',
-  happy:'<path d="M47 59 Q60 73 73 59" stroke="#ffb35c" stroke-width="2.8" fill="none" stroke-linecap="round" filter="url(#'+uid+'f)"/>',
-  near:'<path d="M48 59 Q60 70 72 59" stroke="#ffb35c" stroke-width="2.8" fill="none" stroke-linecap="round" filter="url(#'+uid+'f)"/>',
-  concern:'<path d="M50 66 Q60 58 70 66" stroke="#ffb35c" stroke-width="2.6" fill="none" stroke-linecap="round" filter="url(#'+uid+'f)"/>',
-  celebrate:'<path d="M47 58 Q60 76 73 58 Z" fill="#ffb35c" filter="url(#'+uid+'f)"/>'
+  idle:'<path d="M52 80 Q60 86 68 80" stroke="#ffb35c" stroke-width="2.8" fill="none" stroke-linecap="round" '+eyeGlow+'/>',
+  happy:'<path d="M49 79 Q60 93 71 79" stroke="#ffb35c" stroke-width="3" fill="none" stroke-linecap="round" '+eyeGlow+'/>',
+  near:'<path d="M50 79 Q60 90 70 79" stroke="#ffb35c" stroke-width="3" fill="none" stroke-linecap="round" '+eyeGlow+'/>',
+  concern:'<path d="M52 88 Q60 80 68 88" stroke="#ffb35c" stroke-width="2.8" fill="none" stroke-linecap="round" '+eyeGlow+'/>',
+  celebrate:'<path d="M48 78 Q60 96 72 78 Z" fill="#ffb35c" '+eyeGlow+'/>'
  }[mood];
  const wave=mood==="celebrate"||mood==="happy";
- return `<svg viewBox="0 0 120 185" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true" class="mr-svg">
+ const arms=wave
+  ? '<g class="mr-wave"><path d="M96 104 Q108 84 102 66" stroke="url(#'+uid+'d)" stroke-width="8" fill="none" stroke-linecap="round"/><circle cx="102" cy="60" r="6" fill="url(#'+uid+'w)" stroke="#8b93a5" stroke-width=".7"/></g>'
+  : '<path d="M96 104 Q104 120 100 132" stroke="url(#'+uid+'d)" stroke-width="8" fill="none" stroke-linecap="round"/>';
+ return `<svg viewBox="0 0 120 150" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true" class="mr-svg">
   <defs>
-   <linearGradient id="${uid}w" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".55" stop-color="#e6eaf1"/><stop offset="1" stop-color="#a9b1c2"/></linearGradient>
+   <linearGradient id="${uid}w" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".6" stop-color="#e9edf3"/><stop offset="1" stop-color="#aab2c3"/></linearGradient>
    <linearGradient id="${uid}o" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffb35c"/><stop offset="1" stop-color="#ff7900"/></linearGradient>
    <linearGradient id="${uid}v" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2c3142"/><stop offset="1" stop-color="#0a0b10"/></linearGradient>
    <linearGradient id="${uid}d" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a3f52"/><stop offset="1" stop-color="#15171f"/></linearGradient>
    <filter id="${uid}f" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="1.4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
   </defs>
-  <ellipse cx="60" cy="182" rx="36" ry="3.5" fill="#000" opacity=".22"/>
-  <!-- legs -->
-  <path d="M44 138 Q42 158 44 170" stroke="url(#${uid}d)" stroke-width="12" fill="none" stroke-linecap="round"/>
-  <path d="M76 138 Q78 158 76 170" stroke="url(#${uid}d)" stroke-width="12" fill="none" stroke-linecap="round"/>
-  <rect x="34" y="150" width="6" height="2.4" rx="1.2" fill="url(#${uid}o)"/><rect x="80" y="150" width="6" height="2.4" rx="1.2" fill="url(#${uid}o)"/>
-  <path d="M34 170 Q36 164 48 166 L52 172 Q52 178 42 178 L34 178 Z" fill="url(#${uid}w)" stroke="#8b93a5" stroke-width=".8"/>
-  <path d="M86 170 Q84 164 72 166 L68 172 Q68 178 78 178 L86 178 Z" fill="url(#${uid}w)" stroke="#8b93a5" stroke-width=".8"/>
-  <rect x="36" y="174" width="16" height="4" rx="2" fill="url(#${uid}o)"/><rect x="68" y="174" width="16" height="4" rx="2" fill="url(#${uid}o)"/>
-  <!-- neck -->
-  <rect x="50" y="78" width="20" height="14" rx="4" fill="url(#${uid}d)"/>
-  <path d="M53 80 L53 90 M60 80 L60 90 M67 80 L67 90" stroke="#ff7900" stroke-width="1.6" opacity=".85"/>
-  <!-- torso -->
-  <path d="M26 96 Q60 86 94 96 Q100 112 98 140 Q60 148 22 140 Q20 112 26 96 Z" fill="url(#${uid}w)" stroke="#8b93a5" stroke-width=".8"/>
-  <path d="M40 100 Q60 96 80 100 L80 104 Q60 100 40 104 Z" fill="#1d2130" opacity=".9"/>
-  <rect x="50" y="108" width="20" height="26" rx="6" fill="url(#${uid}d)"/>
-  <rect x="56" y="112" width="8" height="18" rx="4" fill="url(#${uid}o)" filter="url(#${uid}f)"/>
-  <rect x="33" y="112" width="8" height="3.5" rx="1.7" fill="url(#${uid}o)"/><rect x="79" y="112" width="8" height="3.5" rx="1.7" fill="url(#${uid}o)"/>
-  <rect x="30" y="122" width="60" height="3" rx="1.5" fill="#2a2f3d"/>
-  <rect x="36" y="134" width="48" height="6" rx="3" fill="#1d2130"/>
-  <!-- shoulders -->
-  <ellipse cx="22" cy="98" rx="11" ry="10" fill="url(#${uid}w)" stroke="#8b93a5" stroke-width=".7"/>
-  <ellipse cx="98" cy="98" rx="11" ry="10" fill="url(#${uid}w)" stroke="#8b93a5" stroke-width=".7"/>
-  <circle cx="20" cy="99" r="4" fill="url(#${uid}o)" filter="url(#${uid}f)"/><circle cx="100" cy="99" r="4" fill="url(#${uid}o)" filter="url(#${uid}f)"/>
+  <ellipse cx="60" cy="146" rx="30" ry="3.5" fill="#000" opacity=".22"/>
+  <g transform="translate(0,-18)">
+  <!-- chibi body: small torso, legs -->
+  <path d="M42 110 L78 110 L80 136 L40 136 Z" fill="url(#${uid}w)" stroke="#8b93a5" stroke-width=".8"/>
+  <rect x="54" y="116" width="12" height="12" rx="4" fill="url(#${uid}d)"/>
+  <circle cx="60" cy="122" r="3" fill="url(#${uid}o)" '+eyeGlow+'/>
+  <path d="M44 138 Q43 144 44 146" stroke="url(#${uid}d)" stroke-width="9" fill="none" stroke-linecap="round"/>
+  <path d="M76 138 Q77 144 76 146" stroke="url(#${uid}d)" stroke-width="9" fill="none" stroke-linecap="round"/>
+  <path d="M36 146 Q36 142 44 142 L50 144 L50 147 L36 147 Z" fill="url(#${uid}w)" stroke="#8b93a5" stroke-width=".6"/>
+  <path d="M84 146 Q84 142 76 142 L70 144 L70 147 L84 147 Z" fill="url(#${uid}w)" stroke="#8b93a5" stroke-width=".6"/>
   <!-- left arm -->
-  <path d="M16 104 Q10 124 14 140" stroke="url(#${uid}d)" stroke-width="9" fill="none" stroke-linecap="round"/>
-  <rect x="12" y="108" width="7" height="3" rx="1.5" fill="url(#${uid}o)"/>
-  <!-- right arm -->
-  <g class="mr-arm">${wave?'<g class="mr-wave"><path d="M104 104 Q112 84 106 66" stroke="url(#'+uid+'d)" stroke-width="9" fill="none" stroke-linecap="round"/><path d="M106 66 Q104 58 110 54" stroke="url(#'+uid+'w)" stroke-width="7" fill="none" stroke-linecap="round"/><circle cx="111" cy="53" r="4" fill="url(#'+uid+'o)"/></g>':'<path d="M104 104 Q110 124 106 140" stroke="url(#'+uid+'d)" stroke-width="9" fill="none" stroke-linecap="round"/><rect x="101" y="108" width="7" height="3" rx="1.5" fill="url(#'+uid+'o)"/>'}</g>
-  <!-- ear pads -->
-  <circle cx="26" cy="52" r="10" fill="url(#${uid}w)" stroke="#8b93a5" stroke-width=".7"/>
-  <circle cx="26" cy="52" r="6" fill="url(#${uid}o)"/>
-  <circle cx="94" cy="52" r="10" fill="url(#${uid}w)" stroke="#8b93a5" stroke-width=".7"/>
-  <circle cx="94" cy="52" r="6" fill="url(#${uid}o)"/>
-  <!-- helmet -->
-  <path d="M30 46 Q28 14 60 13 Q92 14 90 46 L88 66 Q84 84 60 84 Q36 84 32 66 Z" fill="url(#${uid}w)" stroke="#8b93a5" stroke-width=".9"/>
-  <path d="M42 22 Q60 9 78 22 Q72 17 60 17 Q48 17 42 22 Z" fill="url(#${uid}o)" stroke="#e0660a" stroke-width=".6"/>
-  <path d="M46 19 Q60 12 74 19" stroke="#fff" stroke-width="2" fill="none" opacity=".6"/>
-  <path d="M38 30 Q60 22 82 30" stroke="#ffffff" stroke-width="1.6" fill="none" opacity=".7"/>
+  <path d="M26 104 Q18 118 22 128" stroke="url(#${uid}d)" stroke-width="8" fill="none" stroke-linecap="round"/>
+  <circle cx="22" cy="130" r="5" fill="url(#${uid}w)" stroke="#8b93a5" stroke-width=".6"/>
+  <g class="mr-arm">${arms}</g>
+  </g>
+  <!-- big chibi helmet -->
+  <circle cx="60" cy="50" r="38" fill="url(#${uid}w)" stroke="#8b93a5" stroke-width=".9"/>
+  <!-- orange side discs -->
+  <circle cx="22" cy="56" r="8" fill="url(#${uid}o)" stroke="#c4560a" stroke-width=".6"/>
+  <circle cx="98" cy="56" r="8" fill="url(#${uid}o)" stroke="#c4560a" stroke-width=".6"/>
+  <!-- top orange cap -->
+  <path d="M36 24 Q60 8 84 24 Q76 20 60 20 Q44 20 36 24 Z" fill="url(#${uid}o)"/>
+  <path d="M42 18 Q60 10 78 18" stroke="#fff" stroke-width="2" fill="none" opacity=".6"/>
   <!-- visor -->
-  <path d="M36 34 Q60 28 84 34 Q90 42 88 58 Q86 74 60 74 Q34 74 32 58 Q30 42 36 34 Z" fill="url(#${uid}v)" stroke="#5a6070" stroke-width="1"/>
-  <path d="M40 38 Q60 33 80 38" stroke="#ffffff" stroke-width="1.8" fill="none" opacity=".35"/>
-  <path d="M38 50 Q40 42 44 40" stroke="#ffffff" stroke-width="1.4" fill="none" opacity=".25"/>
-  <!-- face -->
+  <path d="M30 46 Q60 34 90 46 Q94 62 90 74 Q84 86 60 86 Q36 86 30 74 Q26 62 30 46 Z" fill="url(#${uid}v)" stroke="#5a6070" stroke-width="1"/>
+  <path d="M38 48 Q60 40 82 48" stroke="#ffffff" stroke-width="1.8" fill="none" opacity=".3"/>
+  <!-- blush -->
+  <ellipse cx="36" cy="78" rx="4" ry="2.4" fill="#ff8a6a" opacity=".55"/><ellipse cx="84" cy="78" rx="4" ry="2.4" fill="#ff8a6a" opacity=".55"/>
   <g class="mr-gaze"><g class="mr-blink">${eyes}</g></g>
   ${mouth}
-  <!-- bolts -->
-  <circle cx="36" cy="66" r="1.6" fill="#5a6070"/><circle cx="84" cy="66" r="1.6" fill="#5a6070"/>
-  ${mood==="near"?'<path d="M100 22 C96 16 94 20 96 23 C97 25 100 28 100 28 C100 28 103 25 104 23 C106 20 104 16 100 22Z" fill="#ff7a8a" class="mr-float"/>':''}
-  ${mood==="celebrate"?'<circle cx="16" cy="26" r="2.5" fill="#ffb35c" class="mr-float"/><circle cx="104" cy="18" r="2" fill="#ff7900" class="mr-float"/>':''}
+  ${mood==="near"?'<path d="M104 22 C100 16 98 20 100 23 C101 25 104 28 104 28 C104 28 107 25 108 23 C110 20 108 16 104 22Z" fill="#ff7a8a" class="mr-float"/>':''}
+  ${mood==="celebrate"?'<circle cx="14" cy="26" r="2.5" fill="#ffb35c" class="mr-float"/><circle cx="106" cy="16" r="2" fill="#ff7900" class="mr-float"/>':''}
  </svg>`;
 }
 function mascotMessage(){
@@ -864,7 +851,7 @@ function renderMascot(){
  const btn=document.getElementById("txMascotBtn");
  btn.innerHTML=mascotSVG(st,"fl");
  const pc=pct("lines")||0, size=Math.min(130,Math.round(80+pc*0.5));
- btn.style.width=size+"px"; btn.style.height=Math.round(size*1.55)+"px";
+ btn.style.width=size+"px"; btn.style.height=Math.round(size*1.25)+"px";
  btn.classList.toggle("tx-celebrate", st==="celebrate");
  document.getElementById("txMessage").textContent=msg;
  document.getElementById("txTip").textContent=tip;
