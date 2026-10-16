@@ -786,7 +786,7 @@ function mascotSVG(st,uid){
   celebrate:'<path d="M47 58 Q60 76 73 58 Z" fill="#ffb35c" filter="url(#'+uid+'f)"/>'
  }[mood];
  const wave=mood==="celebrate"||mood==="happy";
- return `<svg viewBox="0 0 120 150" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true" class="mr-svg">
+ return `<svg viewBox="0 0 120 185" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true" class="mr-svg">
   <defs>
    <linearGradient id="${uid}w" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".55" stop-color="#e6eaf1"/><stop offset="1" stop-color="#a9b1c2"/></linearGradient>
    <linearGradient id="${uid}o" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffb35c"/><stop offset="1" stop-color="#ff7900"/></linearGradient>
@@ -794,7 +794,14 @@ function mascotSVG(st,uid){
    <linearGradient id="${uid}d" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a3f52"/><stop offset="1" stop-color="#15171f"/></linearGradient>
    <filter id="${uid}f" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="1.4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
   </defs>
-  <ellipse cx="60" cy="147" rx="34" ry="3.5" fill="#000" opacity=".22"/>
+  <ellipse cx="60" cy="182" rx="36" ry="3.5" fill="#000" opacity=".22"/>
+  <!-- legs -->
+  <path d="M44 138 Q42 158 44 170" stroke="url(#${uid}d)" stroke-width="12" fill="none" stroke-linecap="round"/>
+  <path d="M76 138 Q78 158 76 170" stroke="url(#${uid}d)" stroke-width="12" fill="none" stroke-linecap="round"/>
+  <rect x="34" y="150" width="6" height="2.4" rx="1.2" fill="url(#${uid}o)"/><rect x="80" y="150" width="6" height="2.4" rx="1.2" fill="url(#${uid}o)"/>
+  <path d="M34 170 Q36 164 48 166 L52 172 Q52 178 42 178 L34 178 Z" fill="url(#${uid}w)" stroke="#8b93a5" stroke-width=".8"/>
+  <path d="M86 170 Q84 164 72 166 L68 172 Q68 178 78 178 L86 178 Z" fill="url(#${uid}w)" stroke="#8b93a5" stroke-width=".8"/>
+  <rect x="36" y="174" width="16" height="4" rx="2" fill="url(#${uid}o)"/><rect x="68" y="174" width="16" height="4" rx="2" fill="url(#${uid}o)"/>
   <!-- neck -->
   <rect x="50" y="78" width="20" height="14" rx="4" fill="url(#${uid}d)"/>
   <path d="M53 80 L53 90 M60 80 L60 90 M67 80 L67 90" stroke="#ff7900" stroke-width="1.6" opacity=".85"/>
@@ -805,6 +812,7 @@ function mascotSVG(st,uid){
   <rect x="56" y="112" width="8" height="18" rx="4" fill="url(#${uid}o)" filter="url(#${uid}f)"/>
   <rect x="33" y="112" width="8" height="3.5" rx="1.7" fill="url(#${uid}o)"/><rect x="79" y="112" width="8" height="3.5" rx="1.7" fill="url(#${uid}o)"/>
   <rect x="30" y="122" width="60" height="3" rx="1.5" fill="#2a2f3d"/>
+  <rect x="36" y="134" width="48" height="6" rx="3" fill="#1d2130"/>
   <!-- shoulders -->
   <ellipse cx="22" cy="98" rx="11" ry="10" fill="url(#${uid}w)" stroke="#8b93a5" stroke-width=".7"/>
   <ellipse cx="98" cy="98" rx="11" ry="10" fill="url(#${uid}w)" stroke="#8b93a5" stroke-width=".7"/>
@@ -855,8 +863,8 @@ function renderMascot(){
  if(st==="celebrate") setTimeout(celebrateOnce,300);
  const btn=document.getElementById("txMascotBtn");
  btn.innerHTML=mascotSVG(st,"fl");
- const pc=pct("lines")||0, size=Math.min(150,Math.round(96+pc*0.55));
- btn.style.width=size+"px"; btn.style.height=Math.round(size*1.2)+"px";
+ const pc=pct("lines")||0, size=Math.min(130,Math.round(80+pc*0.5));
+ btn.style.width=size+"px"; btn.style.height=Math.round(size*1.55)+"px";
  btn.classList.toggle("tx-celebrate", st==="celebrate");
  document.getElementById("txMessage").textContent=msg;
  document.getElementById("txTip").textContent=tip;
