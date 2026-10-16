@@ -1073,14 +1073,10 @@ function renderDash(){
    <circle cx="60" cy="60" r="50" fill="none" stroke="#ff7900" stroke-width="10" stroke-linecap="round" stroke-dasharray="314" stroke-dashoffset="${ringOff}" transform="rotate(-90 60 60)"/></svg>
    <p class="note" style="text-align:center;margin:8px 0 0">${fmt(a)} من ${fmt(t)} خط</p>
    ${robot("")}</div>
-  <div class="card dash-card"><h4>تحليل اليوم <small>${todayEntries.length} تسجيل</small></h4>${kpiRows}</div>
   <div class="card dash-card"><h4>تخطيط الهدف <small>${pace.remainingWorkdays} يوم شغل متبقي</small></h4>
    <p class="note" style="margin:6px 0">المتوقع لحد النهارده <b style="color:#ffb36b">${fmt(pace.expectedPct)}%</b></p>
    ${req.state==="needed"?`<div class="tip">يومياً: <b>${fmt(req.perDay)}</b> خط للوصول للهدف</div>`:""}
-   <div style="height:10px;border-radius:8px;background:#22304f;overflow:hidden"><div style="height:100%;width:${Math.min(100,pace.expectedPct)}%;background:#3a4a7a"></div></div></div>
-  <div class="card dash-card"><h4>نصائح تارجت إكس <small>ذكي</small></h4>
-   ${tips.map(x=>`<div class="tip">${x}</div>`).join("")}
-   ${robot("right")}</div>`;
+   <div style="height:10px;border-radius:8px;background:#22304f;overflow:hidden"><div style="height:100%;width:${Math.min(100,pace.expectedPct)}%;background:#3a4a7a"></div></div></div>`;
 }
 function renderReports(){
  const items=state.settings.kpis;
