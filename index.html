@@ -345,6 +345,16 @@ input,select,textarea{background:#fff!important;color:#1d1d26!important;border-c
 </div>
 </section>
 
+<section id="todayPage" class="hidden">
+  <div class="card" style="margin-bottom:14px;text-align:center"><div class="stat-label">مطلوب منك تبيع النهارده</div><div class="stat-value" id="todayNeed">—</div></div>
+  <div class="section-head"><div><h3>مبيعات اليوم</h3></div></div>
+  <div id="todayList"></div>
+</section>
+<section id="aiPage" class="hidden">
+  <div class="section-head"><div><h3>المساعد الذكي ✦</h3><div class="sub">اسأل تارجت إكس بالعامية أو الإنجليزي</div></div></div>
+  <div class="card"><div class="tx-chat" id="aiChat" style="max-height:52vh;min-height:200px"></div>
+    <div class="tx-askrow"><input id="aiInput" placeholder="اسألني عن الشغل... Ask me" onkeydown="if(event.key==='Enter')aiSend()"><button class="btn primary" onclick="aiSend()">إرسال</button></div></div>
+</section>
 <section id="addPage" class="hidden">
   <div class="section-head"><div><h3>تسجيل إنجاز جديد ✨</h3>
   <div class="sub">سجل إنجازك عشان التارجت يتحدث تلقائيًا</div></div></div>
@@ -384,6 +394,9 @@ input,select,textarea{background:#fff!important;color:#1d1d26!important;border-c
 
 
 <section id="encPage" class="hidden">
+  <div class="card" style="margin-bottom:14px"><h3 style="margin:0 0 8px">📞 أرقام الهانت</h3><div id="huntList"></div></div>
+  <div class="card" style="margin-bottom:14px"><h3 style="margin:0 0 8px">📦 الباقات</h3><div id="pkgList"></div></div>
+  <div class="card" style="margin-bottom:14px"><h3 style="margin:0 0 8px">✉️ الإيميلات</h3><p class="note">مفيش إيميلات لسه، ابعتها وأضيفها هنا.</p></div>
   <div class="section-head"><div><h3>موسوعة SR 📚</h3>
   <div class="sub">ابحث بالكود أو بالعنوان، وانسخ السجل بضغطة</div></div></div>
   <div class="card">
@@ -424,8 +437,9 @@ input,select,textarea{background:#fff!important;color:#1d1d26!important;border-c
 </div>
 <nav class="tabs"><div class="tab-inner">
   <button class="tab active" data-page="home" onclick="showPage('home')"><span>⌂</span>الرئيسية<small>Home</small></button>
+  <button class="tab" data-page="today" onclick="showPage('today')"><span>📅</span>اليوم<small>Today</small></button>
   <button class="tab" data-page="targets" onclick="showPage('targets')"><span>🎯</span>التارجت<small>Targets</small></button>
-  <button class="tab" data-page="ai" onclick="toggleMascotPanel()"><span>✦</span>مساعد AI<small>Assistant</small></button>
+  <button class="tab" data-page="ai" onclick="showPage('ai')"><span>✦</span>مساعد AI<small>Assistant</small></button>
   <button class="tab" data-page="add" onclick="showPage('add')"><span>＋</span>سجّل<small>Add</small></button>
 </div></nav>
 <div id="toast" class="toast hidden" role="status"></div>
@@ -585,12 +599,13 @@ function showToast(msg){
  clearTimeout(showToast.timer);showToast.timer=setTimeout(()=>t.classList.add("hidden"),2300);
 }
 function showPage(page){
- ["home","add","targets","enc"].forEach(p=>
+ ["home","add","targets","enc","today","ai"].forEach(p=>
   document.getElementById(p+"Page").classList.toggle("hidden",p!==page));
  document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("active",b.dataset.page===page));
  if(page==="targets")renderSettings();
  if(page==="add")renderProductSelect();
- if(page==="enc")renderEncyclopedia();
+ if(page==="enc"){renderEncyclopedia();renderEncExtra();}
+ if(page==="today")renderToday();
  window.scrollTo({top:0,behavior:"smooth"});
 }
 function renderPace(){
@@ -988,6 +1003,34 @@ function aiReply(q){
   return "كمّل بنفس الإيقاع، وراقب المؤشر الأضعف في الرئيسية عشان تعالجه بسرعة.";
  }
  return "أنا مساعد التارجت بتاعك: أقدر أقولك فاضل كام، ونسبتك إيه، وأشرح الحسابات، وأساعدك تسجّل وتلاقي كودات SR. اسألني بالعامية زي ما تحب، مثلاً: \"فاضل كام؟\" أو \"أزود إزاي؟\"";
+}
+
+const HUNTS_DATA=[["Cs Hants Orange", [["Activation Team", "01223202818"], ["Prepaid Team", "01223204321"], ["Activation Data Line", "01223200252"], ["Complain Pre", "01223204604"], ["Save Team", "01223204602"], ["Complain Post", "01223204603"], ["Data Team", "01223202062"], ["Points", "01223204786"], ["Team 110", "01223202870"], ["Data Gathering", "01223202995"], ["Activation Corp", "01223204260"], ["POS", "01223202828"], ["Credit Corp", "01223202849"], ["First Class", "01223202976"], ["Fraud Team", "01223206299"], ["STK", "01223204323"], ["SPOC", "01223202102"], ["Credit", "01223202113"], ["Save Team Corp", "01223204959"], ["MNP Team", "01223204554"], ["MNP Prepaid", "01223200006"], ["MNP Postpaid", "01223204602"], ["MNP Corporate", "01223204140"], ["Prepaid Activation", "01223202995"], ["RSS TEAM", "01223204209"]]], ["Cs Hants ADSL", [["Activation & TE Portal", "01223200737"], ["Finance", "01223200383"], ["Tariff Migration", "01223200717"], ["Retention Team (1)", "01223200711"], ["Retention Team (2)", "01223200712"], ["Technical Support (1)", "01223200359"], ["Technical Support (2)", "01223208100"], ["Fixed Activation", "01223209021"]]]];
+const PKG_DATA=[["FREEmax", [["Free Max 52", "1,800", "50 MB", "74.29"], ["Free Max 80", "3,000", "50 MB", "114.29"], ["Free Max 115", "5,000", "50 MB", "164.29"], ["Free Max 175", "9,000", "50 MB", "250"], ["Free Max 230", "12,000", "50 MB", "328.57"], ["Free Max 345", "20,000", "50 MB", "492.86"]]], ["Orange Premier", [["Premier Lite"], ["Premier Plus"], ["Premier Select"], ["Premier Ultra"], ["Premier Platinum"]]], ["Home DSL", [["Home DSL 330", "30 Mbps · 200 GB · 376.2 ج / شهرياً"], ["Home DSL 150"]]], ["Home Wireless", [["Home Wireless 40 GB", "40 GB", "—"], ["Home Wireless 70 GB", "70 GB", "—"], ["Home Wireless 140 GB", "140 GB", "—"], ["Home Wireless 250 GB", "250 GB", "—"], ["Home Wireless 350 GB", "350 GB", "—"], ["Home Wireless 400 GB", "400 GB", "—"], ["Home Wireless 1000 GB", "1000 GB", "—"]]]];
+function renderEncExtra(){
+ document.getElementById("huntList").innerHTML=HUNTS_DATA.map(([g,rows])=>`<h4 style="margin:10px 0 6px;color:#e66b00">${safe(g)}</h4>`+rows.map(([n,num])=>`<div class="stat-bottom" style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #f1e4d6"><span>${safe(n)}</span><b dir="ltr" onclick="copyText('${num}')" style="cursor:pointer">${num}</b></div>`).join("")).join("");
+ document.getElementById("pkgList").innerHTML=PKG_DATA.map(([g,rows])=>`<h4 style="margin:10px 0 6px;color:#e66b00">${safe(g)}</h4>`+rows.map(r=>`<div style="padding:6px 0;border-bottom:1px solid #f1e4d6"><b>${safe(r[0])}</b><div class="note" style="margin:2px 0 0">${r.slice(1).map(safe).join(" · ")}</div></div>`).join("")).join("");
+}
+function copyText(t){ if(navigator.clipboard) navigator.clipboard.writeText(t).then(()=>showToast("اتنسخ ✓")); }
+function renderToday(){
+ const today=localDate();
+ const m=state.settings.month;
+ const todays=state.entries.filter(e=>e.date===today);
+ const lines=kpi("lines"), a=achieved("lines"), t=Number(lines.target)||0;
+ const pace=TargetXEngine.paceForMonth({monthStart:m+"-01",monthEnd:new Date(Date.UTC(+m.slice(0,4),+m.slice(5,7),0)).toISOString().slice(0,10),today:today,rules:{}});
+ const req=TargetXEngine.requiredDaily(t,a,pace.remainingWorkdays);
+ document.getElementById("todayNeed").textContent = req.state==="done" ? "خلصت ✓" : (req.perDay!==null ? fmt(Math.ceil(req.perDay))+" خط" : "—");
+ document.getElementById("todayList").innerHTML = state.settings.kpis.map(k=>{
+   const v=todays.filter(e=>e.id===k.id).reduce((s,e)=>s+Number(e.qty||0),0);
+   return `<div class="card" style="margin-bottom:10px;display:flex;justify-content:space-between;align-items:center"><div><div class="stat-label">${safe(k.name)}</div><div class="note">اليوم</div></div><div class="stat-value" style="font-size:24px">${fmt(v)}</div></div>`;
+ }).join("") || '<div class="empty">لسه مفيش مبيعات النهارده</div>';
+}
+function aiSend(){
+ const inp=document.getElementById("aiInput"), q=inp.value.trim(); if(!q) return;
+ const box=document.getElementById("aiChat");
+ box.insertAdjacentHTML("beforeend",`<div class="tx-me">${safe(q)}</div>`);
+ inp.value="";
+ setTimeout(()=>{box.insertAdjacentHTML("beforeend",`<div class="tx-bot">${safe(aiReply(q))}</div>`);box.scrollTop=box.scrollHeight},200);
 }
 function sendMrTarget(){
  const inp=document.getElementById("txInput");
