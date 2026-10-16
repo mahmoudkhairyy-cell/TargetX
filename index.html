@@ -350,8 +350,7 @@ h1,h2,h3,h4,button,input,select{font-family:"Cairo","Segoe UI",Tahoma,Arial,sans
     </div>
   </div>
   <div class="rh-stats">
-    <div class="rh-stat"><div class="rh-stat-l">الخطوط المحققة 📱</div><div class="rh-stat-v" id="lineDone">0</div><div class="rh-stat-s">من <span id="lineTarget">0</span></div></div>
-    <div class="rh-stat"><div class="rh-stat-l">المتبقي للخطوط 🎯</div><div class="rh-stat-v" id="pointsRemainingLines">0</div><div class="rh-stat-s">خط</div></div>
+    <div class="rh-stat" style="grid-column:1/-1"><div class="rh-stat-l">الخطوط المحققة 📱</div><div class="rh-stat-v" id="lineDone">0</div><div class="rh-stat-s">خط تم تسجيله هذا الشهر</div></div>
   </div>
   <div class="rh-sec-title">مؤشرات الأداء</div>
   <div id="kpiGrid" class="rh-kpis"></div>
@@ -421,18 +420,20 @@ h1,h2,h3,h4,button,input,select{font-family:"Cairo","Segoe UI",Tahoma,Arial,sans
 
 
 <section id="encPage" class="hidden">
+  <button id="encBack" class="btn secondary full hidden" style="margin-bottom:12px" onclick="openEnc(null)">← رجوع للموسوعة</button>
   <div class="rh-tiles">
-    <a class="rh-tile" href="#pkgFree">⚡<b>FREEmax</b><small>باقات فري ماكس</small></a>
-    <a class="rh-tile" href="#encSR">🗄️<b>موسوعة الـ SR</b><small>كل الأكواد</small></a>
-    <a class="rh-tile" href="#pkgGo">📱<b>Go</b><small>Go Monthly</small></a>
-    <a class="rh-tile" href="#pkgPrem">👑<b>Premier</b><small>باقات Premier</small></a>
-    <a class="rh-tile" href="#huntSec">📞<b>أرقام الهانت</b><small>جهات التواصل</small></a>
-    <a class="rh-tile" href="#pkgHome">📶<b>Home Wireless</b><small>باقات الإنترنت</small></a>
-    <a class="rh-tile" href="#mailSec">✉️<b>E-Mails</b><small>الإيميلات</small></a>
+    <a class="rh-tile" href="javascript:void(0)" onclick="openEnc('free')">⚡<b>FREEmax</b><small>باقات فري ماكس</small></a>
+    <a class="rh-tile" href="javascript:void(0)" onclick="openEnc('sr')">🗄️<b>موسوعة الـ SR</b><small>كل الأكواد</small></a>
+    <a class="rh-tile" href="javascript:void(0)" onclick="openEnc('go')">📱<b>Go</b><small>Go Monthly</small></a>
+    <a class="rh-tile" href="javascript:void(0)" onclick="openEnc('prem')">👑<b>Premier</b><small>باقات Premier</small></a>
+    <a class="rh-tile" href="javascript:void(0)" onclick="openEnc('hunt')">📞<b>أرقام الهانت</b><small>جهات التواصل</small></a>
+    <a class="rh-tile" href="javascript:void(0)" onclick="openEnc('home')">📶<b>Home Wireless</b><small>باقات الإنترنت</small></a>
+    <a class="rh-tile" href="javascript:void(0)" onclick="openEnc('mail')">✉️<b>E-Mails</b><small>الإيميلات</small></a>
   </div>
-  <div class="card" id="huntSec" style="margin-bottom:14px"><h3 style="margin:0 0 8px">📞 أرقام الهانت</h3><div id="huntList"></div></div>
-  <div class="card" id="pkgSec" style="margin-bottom:14px"><h3 style="margin:0 0 8px">📦 الباقات</h3><div id="pkgList"></div></div>
-  <div class="card" id="mailSec" style="margin-bottom:14px"><h3 style="margin:0 0 8px">✉️ الإيميلات</h3><p class="note">مفيش إيميلات لسه، ابعتها وأضيفها هنا.</p></div>
+  <div class="card enc-item" data-enc="hunt" id="huntSec" style="margin-bottom:14px"><h3 style="margin:0 0 8px">📞 أرقام الهانت</h3><div id="huntList"></div></div>
+  <div id="pkgList"></div>
+  <div class="card enc-item" data-enc="mail" id="mailSec" style="margin-bottom:14px"><h3 style="margin:0 0 8px">✉️ الإيميلات</h3><p class="note">مفيش إيميلات لسه، ابعتها وأضيفها هنا.</p></div>
+  <div class="enc-item" data-enc="sr">
   <div class="section-head"><div><h3>موسوعة SR 📚</h3>
   <div class="sub">ابحث بالكود أو بالعنوان، وانسخ السجل بضغطة</div></div></div>
   <div class="card">
@@ -444,7 +445,8 @@ h1,h2,h3,h4,button,input,select{font-family:"Cairo","Segoe UI",Tahoma,Arial,sans
     <p class="note" style="color:#b35400">⚠️ الترجمة العربية مولّدة تلقائياً وبعض السجلات محتاجة مراجعة. راجع المصدر قبل الاعتماد.</p>
   </div>
   <div id="encResults"></div>
-  <p class="note">المصدر: orange-sr-cshunts.vercel.app (غير رسمي، من إعداد الموظف)</p>
+  </div>
+  <p class="note enc-item" data-enc="sr">المصدر: orange-sr-cshunts.vercel.app (غير رسمي، من إعداد الموظف)</p>
 </section>
 
 
@@ -640,7 +642,7 @@ function showPage(page){
  document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("active",b.dataset.page===page));
  if(page==="targets")renderSettings();
  if(page==="add")renderProductSelect();
- if(page==="enc"){renderEncyclopedia();renderEncExtra();}
+ if(page==="enc"){renderEncyclopedia();renderEncExtra();openEnc(null);}
  if(page==="today")renderToday();
  window.scrollTo({top:0,behavior:"smooth"});
 }
@@ -687,7 +689,7 @@ function renderHome(){
  set("lineDone", fmt(achieved("lines")));
  set("lineTarget", fmt(lines.target));
  set("pointsRemainingLines", fmt(Math.max(0,(Number(lines.target)||0)-achieved("lines"))));
- set("heroRemain", "متبقي "+fmt(Math.max(0,(Number(lines.target)||0)-achieved("lines")))+" خط للتارجت");
+ set("heroRemain", "محقق "+fmt(achieved("lines"))+" خط هذا الشهر");
  const commMax=Number(state.settings.commissionMax)||6000;
  set("heroComm", fmt(Math.round(Math.min(100,overall.overall)/100*commMax)));
  set("heroCommMax", fmt(commMax));
@@ -702,7 +704,7 @@ function renderHome(){
   const done=achieved(k.id), percent=pct(k.id);
   return `<article class="rh-kpi">
    <div class="rh-kpi-top"><span class="rh-kpi-pct">${fmt(percent)}%</span><span class="rh-kpi-name">${safe(k.name)}</span><span class="rh-kpi-ic">${safe(k.icon)}</span></div>
-   <div class="rh-kpi-row"><span>المستهدف: <b>${fmt(k.target)}</b></span><span>المحقق: <b>${fmt(done)}</b></span></div>
+   <div class="rh-kpi-row"><span></span><span>المحقق: <b>${fmt(done)}</b></span></div>
    <div class="rh-bar"><span style="width:${Math.min(100,Math.max(0,percent))}%"></span></div>
    <div class="rh-kpi-foot"><span>الوزن: ${fmt(k.weight)}%</span><span>مساهمة: ${fmt(overall.contributions?.[k.id]??0)}%</span></div>
   </article>`;
@@ -1051,7 +1053,16 @@ const HUNTS_DATA=[["Cs Hants Orange", [["Activation Team", "01223202818"], ["Pre
 const PKG_DATA=[["FREEmax", [["Free Max 52", "1,800", "50 MB", "74.29"], ["Free Max 80", "3,000", "50 MB", "114.29"], ["Free Max 115", "5,000", "50 MB", "164.29"], ["Free Max 175", "9,000", "50 MB", "250"], ["Free Max 230", "12,000", "50 MB", "328.57"], ["Free Max 345", "20,000", "50 MB", "492.86"]]], ["Orange Premier", [["Premier Lite"], ["Premier Plus"], ["Premier Select"], ["Premier Ultra"], ["Premier Platinum"]]], ["Go Monthly", [["Go 23", "750 MB · L.E 32.86"], ["Go 37", "1400 MB · L.E 52.87"], ["Go 58", "2500 MB · L.E 82.86"], ["Go 92", "4250 MB · L.E 131.44"], ["Go 120", "6000 MB · L.E 171.43"], ["Go 180", "10000 MB · L.E 257.15"], ["Go 300", "18000 MB · L.E 428.58"], ["Go 450", "29000 MB · L.E 642.86"], ["Go 600", "45000 MB · L.E 857.15"]]], ["Home DSL", [["Home DSL 330", "30 Mbps · 200 GB · 376.2 ج / شهرياً"], ["Home DSL 150"]]], ["Home Wireless", [["Home Wireless 40 GB", "40 GB", "—"], ["Home Wireless 70 GB", "70 GB", "—"], ["Home Wireless 140 GB", "140 GB", "—"], ["Home Wireless 250 GB", "250 GB", "—"], ["Home Wireless 350 GB", "350 GB", "—"], ["Home Wireless 400 GB", "400 GB", "—"], ["Home Wireless 1000 GB", "1000 GB", "—"]]]];
 function renderEncExtra(){
  document.getElementById("huntList").innerHTML=HUNTS_DATA.map(([g,rows])=>`<h4 style="margin:10px 0 6px;color:#e66b00">${safe(g)}</h4>`+rows.map(([n,num])=>`<div class="stat-bottom" style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #f1e4d6"><span>${safe(n)}</span><b dir="ltr" onclick="copyText('${num}')" style="cursor:pointer">${num}</b></div>`).join("")).join("");
- document.getElementById("pkgList").innerHTML=PKG_DATA.map(([g,rows])=>`<h4 id="${({"FREEmax":"pkgFree","Go Monthly":"pkgGo","Orange Premier":"pkgPrem","Home Wireless":"pkgHome"})[g]||""}" style="margin:10px 0 6px;color:#e66b00">${safe(g)}</h4>`+rows.map(r=>`<div style="padding:6px 0;border-bottom:1px solid #f1e4d6"><b>${safe(r[0])}</b><div class="note" style="margin:2px 0 0">${r.slice(1).map(safe).join(" · ")}</div></div>`).join("")).join("");
+ const PKG_KEYS={"FREEmax": "free", "Go Monthly": "go", "Orange Premier": "prem", "Home DSL": "dsl", "Home Wireless": "home"};
+document.getElementById("pkgList").innerHTML=PKG_DATA.map(([g,rows])=>`<div class="card enc-item" data-enc="${PKG_KEYS[g]||"other"}" style="margin-bottom:14px"><h3 style="margin:0 0 8px">📦 ${safe(g)}</h3>`+rows.map(r=>`<div style="padding:6px 0;border-bottom:1px solid #f1e4d6"><b>${safe(r[0])}</b><div class="note" style="margin:2px 0 0">${r.slice(1).map(safe).join(" · ")}</div></div>`).join("")+`</div>`).join("");
+}
+function openEnc(k){
+ const page=document.getElementById("encPage");
+ page.querySelector(".rh-tiles").classList.toggle("hidden",!!k);
+ page.querySelectorAll(".enc-item").forEach(el=>el.classList.toggle("hidden", el.dataset.enc!==k));
+ document.getElementById("encBack").classList.toggle("hidden",!k);
+ if(k==="sr") renderEncyclopedia();
+ window.scrollTo(0,0);
 }
 function copyText(t){ if(navigator.clipboard) navigator.clipboard.writeText(t).then(()=>showToast("اتنسخ ✓")); }
 function renderToday(){
