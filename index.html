@@ -350,24 +350,15 @@ h1,h2,h3,h4,button,input,select{font-family:"Cairo","Segoe UI",Tahoma,Arial,sans
     </div>
   </div>
   <div class="rh-stats">
-    <div class="rh-stat"><div class="rh-stat-l">العدد 📱</div><div class="rh-stat-v" id="lineDone">0</div><div class="rh-stat-s">خط محقق من <span id="lineTarget">0</span></div></div>
-    <div class="rh-stat"><div class="rh-stat-l">الوزن ⚖️</div><div class="rh-stat-v"><span id="weightTop">100</span>%</div><div class="rh-stat-s">مجموع أوزان المؤشرات</div></div>
+    <div class="rh-stat"><div class="rh-stat-l">الخطوط المحققة 📱</div><div class="rh-stat-v" id="lineDone">0</div><div class="rh-stat-s">من <span id="lineTarget">0</span></div></div>
+    <div class="rh-stat"><div class="rh-stat-l">المتبقي للخطوط 🎯</div><div class="rh-stat-v" id="pointsRemainingLines">0</div><div class="rh-stat-s">خط</div></div>
   </div>
   <div class="rh-sec-title">مؤشرات الأداء</div>
   <div id="kpiGrid" class="rh-kpis"></div>
+</section>
   <!-- hidden ids kept for compatibility -->
   <div hidden><span id="linePercent"></span><span id="lineRing"></span><span id="lineBar"></span><span id="totalPoints"></span><span id="pointsRemaining"></span><span id="weightTotal"></span><span id="todayText"></span><span id="paceLine"></span><span id="paceExpected"></span><span id="paceStatus"></span><p id="paceNote"></p><div id="dash"></div></div>
-  <div class="rh-reports"><div id="reportsBlock" class="reports-block">
-  <div class="section-head"><div><h3>التقارير 📊</h3>
-  <div class="sub">ملخص الإنجاز خلال الشهر المحدد</div></div></div>
-  <div class="grid" id="reportGrid"></div>
-  <div class="section-head"><div><h3>سجل العمليات بالكامل</h3></div>
-    <button class="btn secondary" onclick="clearEntries()">مسح السجل</button></div>
-  <div class="card" id="allEntries"></div>
-</div>
-</div>
-</section>
-<section id="todayPage" class="hidden">
+  <section id="todayPage" class="hidden">
   <div class="card" style="margin-bottom:14px;text-align:center"><div class="stat-label">مطلوب منك تبيع النهارده</div><div class="stat-value" id="todayNeed">—</div></div>
   <div class="section-head"><div><h3>مبيعات اليوم</h3></div></div>
   <div id="todayList"></div>
@@ -690,14 +681,14 @@ function renderHome(){
  set("lineDone", fmt(achieved("lines")));
  set("lineTarget", fmt(lines.target));
  set("pointsRemainingLines", fmt(Math.max(0,(Number(lines.target)||0)-achieved("lines"))));
- set("heroRemain", "محقق "+fmt(achieved("lines"))+" خط هذا الشهر");
+ set("heroRemain", "متبقي "+fmt(Math.max(0,(Number(lines.target)||0)-achieved("lines")))+" خط للتارجت");
+ set("pointsRemainingLines", fmt(Math.max(0,(Number(lines.target)||0)-achieved("lines"))));
  const commMax=Number(state.settings.commissionMax)||6000;
  set("heroComm", fmt(Math.round(Math.min(100,overall.overall)/100*commMax)));
  set("heroCommMax", fmt(commMax));
  set("employeeGreeting", state.settings.employee||"—");
  set("branchName2", "📍 "+(state.settings.branch||""));
  set("weightTotal", fmt(overall.weights.total));
- set("weightTop", fmt(overall.weights.total));
  set("mascotMessage",
   lp>=100?"يا وحش! خلصت تارجت الخطوط 🏆":
   lp>=70?"إنت قريب أوي! فاضل شوية 💪":
@@ -1156,6 +1147,7 @@ function renderDash(){
    <div style="height:10px;border-radius:8px;background:#22304f;overflow:hidden"><div style="height:100%;width:${Math.min(100,pace.expectedPct)}%;background:#3a4a7a"></div></div></div>`;
 }
 function renderReports(){
+ if(!document.getElementById("reportGrid")) return;
  const items=state.settings.kpis;
  document.getElementById("reportGrid").innerHTML=items.map(k=>
  `<div class="card"><div class="stat-label">${safe(k.name)}</div>
