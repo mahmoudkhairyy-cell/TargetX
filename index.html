@@ -402,6 +402,11 @@ input,select,textarea{background:#fff!important;color:#1d1d26!important;border-c
       <input id="branchName" maxlength="60" placeholder="اسم الفرع"></div>
     <div class="field"><label for="monthName">الشهر الحالي</label>
       <input id="monthName" type="month"></div>
+    <div class="field"><label for="commissionMax">الكوميشن الكامل (جنيه)</label>
+      <input id="commissionMax" type="number" min="1" step="any" placeholder="6000"></div>
+    <div class="field"><label for="aiKey">مفتاح الذكاء الاصطناعي (اختياري)</label>
+      <input id="aiKey" type="password" placeholder="sk-ant-..." autocomplete="off"></div>
+    <p class="note">المفتاح بيتحفظ على جهازك بس. لو مش عايز AI سيبه فاضي.</p>
     <div id="targetFields"></div>
     <button class="btn primary full" onclick="saveSettings()">حفظ الإعدادات</button>
     <button class="btn secondary full" style="margin-top:10px" onclick="openIntro()">🎓 شرح التطبيق مع تارجت إكس</button>
@@ -745,6 +750,8 @@ function renderSettings(){
  document.getElementById("employeeName").value=state.settings.employee||"";
  document.getElementById("branchName").value=state.settings.branch||"";
  document.getElementById("monthName").value=state.settings.month;
+ document.getElementById("commissionMax").value=state.settings.commissionMax||6000;
+ document.getElementById("aiKey").value=state.settings.aiKey||"";
  document.getElementById("targetFields").innerHTML=state.settings.kpis.map(k=>
  `<div class="field"><label for="target-${safe(k.id)}">${safe(k.name)} — المستهدف</label>
  <input id="target-${safe(k.id)}" type="number" min="0" step="any" value="${Number(k.target)}"></div>`).join("");
@@ -760,6 +767,10 @@ function saveSettings(){
  }
  state.settings.employee=document.getElementById("employeeName").value.trim();
  state.settings.branch=document.getElementById("branchName").value.trim();
+ const comm=Number(document.getElementById("commissionMax").value);
+ if(!(comm>0)){showToast("الكوميشن لازم يكون رقم أكبر من صفر");return}
+ state.settings.commissionMax=comm;
+ state.settings.aiKey=document.getElementById("aiKey").value.trim();
  state.settings.month=month;state.settings.kpis=newTargets;
  persist();renderHome();showToast("تم حفظ الإعدادات بنجاح");showPage("home");
 }
@@ -1054,21 +1065,43 @@ function renderToday(){
    return `<div class="card" style="margin-bottom:10px;display:flex;justify-content:space-between;align-items:center"><div><div class="stat-label">${safe(k.name)}</div><div class="note">اليوم</div></div><div class="stat-value" style="font-size:24px">${fmt(v)}</div></div>`;
  }).join("") || '<div class="empty">لسه مفيش مبيعات النهارده</div>';
 }
-function aiSend(){
+async function aiSend(){
  const inp=document.getElementById("aiInput"), q=inp.value.trim(); if(!q) return;
  const box=document.getElementById("aiChat");
  box.insertAdjacentHTML("beforeend",`<div class="tx-me">${safe(q)}</div>`);
  inp.value="";
- setTimeout(()=>{box.insertAdjacentHTML("beforeend",`<div class="tx-bot">${safe(aiReply(q))}</div>`);box.scrollTop=box.scrollHeight},200);
+ const wait="يفكر...";
+ box.insertAdjacentHTML("beforeend",`<div class="tx-bot" id="aiWait">${wait}</div>`);
+ const ans=await aiAsk(q);
+ const w=document.getElementById("aiWait"); if(w) w.remove();
+ box.insertAdjacentHTML("beforeend",`<div class="tx-bot">${safe(ans)}</div>`);
+ box.scrollTop=box.scrollHeight;
 }
-function sendMrTarget(){
+async function aiAsk(q){
+ const key=(state.settings&&state.settings.aiKey)||"";
+ if(!key) return aiReply(q);
+ const lines=kpi("lines"), a=achieved("lines"), t=Number(lines.target)||0;
+ const ctx=`الموظف: ${state.settings.employee||"—"}، الفرع: ${state.settings.branch||"—"}.
+الخطوط المحققة: ${a} من ${t} (${fmt(pct("lines"))}%). الإجمالي الموزون: ${fmt(TargetXEngine.computeOverall(state.settings.kpis,Object.fromEntries(state.settings.kpis.map(k=>[k.id,achieved(k.id)])),{}).overall)}%.
+المؤشرات: ${state.settings.kpis.map(k=>`${k.name}: ${achieved(k.id)} من ${k.target}`).join("، ")}.`;
+ try{
+  const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"content-type":"application/json","x-api-key":key,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},
+   body:JSON.stringify({model:"claude-haiku-5-5",max_tokens:400,system:"انت مساعد اسمه تارجت إكس بتساعد موظف مبيعات في شركة اتصالات. رد بالعامية المصرية، بشكل مختصر ومشجع، واعتمد على البيانات دي فقط:\n"+ctx,messages:[{role:"user",content:q}]})});
+  if(!r.ok) throw new Error("HTTP "+r.status);
+  const j=await r.json();
+  const txt=(j.content||[]).filter(c=>c.type==="text").map(c=>c.text).join("\n").trim();
+  return txt||aiReply(q);
+ }catch(e){
+  return aiReply(q)+"\n(الذكاء الاصطناعي مش متاح دلوقتي، جرّب تاني بعدين)";
+ }
+}
+async function sendMrTarget(){
  const inp=document.getElementById("txInput");
  const q=inp.value; if(!q.trim())return;
  const box=document.getElementById("txChat");
  box.insertAdjacentHTML("beforeend",`<div class="tx-me">${safe(q)}</div>`);
- const ans=aiReply(q);
- setTimeout(()=>{box.insertAdjacentHTML("beforeend",`<div class="tx-bot">${safe(ans)}</div>`);box.scrollTop=box.scrollHeight},250);
  inp.value="";
+ aiAsk(q).then(ans=>{box.insertAdjacentHTML("beforeend",`<div class="tx-bot">${safe(ans)}</div>`);box.scrollTop=box.scrollHeight});
 }
 
 function renderDash(){
