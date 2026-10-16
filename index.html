@@ -423,8 +423,10 @@ h1,h2,h3,h4,button,input,select{font-family:"Cairo","Segoe UI",Tahoma,Arial,sans
     <a class="rh-tile" href="javascript:void(0)" onclick="openEnc('prem')">👑<b>Premier</b><small>باقات Premier</small></a>
     <a class="rh-tile" href="javascript:void(0)" onclick="openEnc('hunt')">📞<b>أرقام الهانت</b><small>جهات التواصل</small></a>
     <a class="rh-tile" href="javascript:void(0)" onclick="openEnc('home')">📶<b>Home Wireless</b><small>باقات الإنترنت</small></a>
+    <a class="rh-tile" href="javascript:void(0)" onclick="openEnc('emails')">✉️<b>الإيميلات</b><small>جهات الإيميل</small></a>
   </div>
   <div class="card enc-item" data-enc="hunt" id="huntSec" style="margin-bottom:14px"><h3 style="margin:0 0 8px">📞 أرقام الهانت</h3><div id="huntList"></div></div>
+  <div class="card enc-item" data-enc="emails" id="emailSec" style="margin-bottom:14px"><h3 style="margin:0 0 8px">✉️ الإيميلات</h3><div id="emailList"></div></div>
   <div id="pkgList"></div>
   <div class="enc-item" data-enc="sr">
   <div class="section-head"><div><h3>موسوعة SR 📚</h3>
@@ -635,7 +637,7 @@ function showPage(page){
  document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("active",b.dataset.page===page));
  if(page==="targets")renderSettings();
  if(page==="add")renderProductSelect();
- if(page==="enc"){renderEncyclopedia();renderEncExtra();renderHunts();openEnc(null);}
+ if(page==="enc"){renderEncyclopedia();renderEncExtra();renderHunts();renderEmails();openEnc(null);}
  if(page==="today"){renderToday();renderReports();}
  window.scrollTo({top:0,behavior:"smooth"});
 }
@@ -1048,6 +1050,48 @@ const PKG_DATA=[["FREEmax", [["Free Max 52", "1,800", "50 MB", "74.29"], ["Free 
 function renderEncExtra(){
  const PKG_KEYS={"FREEmax": "free", "Go Monthly": "go", "Orange Premier": "prem", "Home DSL": "dsl", "Home Wireless": "home"};
 document.getElementById("pkgList").innerHTML=PKG_DATA.map(([g,rows])=>`<div class="card enc-item" data-enc="${PKG_KEYS[g]||"other"}" style="margin-bottom:14px"><h3 style="margin:0 0 8px">📦 ${safe(g)}</h3>`+rows.map(r=>`<div style="padding:6px 0;border-bottom:1px solid #f1e4d6"><b>${safe(r[0])}</b><div class="note" style="margin:2px 0 0">${r.slice(1).map(safe).join(" · ")}</div></div>`).join("")+`</div>`).join("");
+}
+const EMAILS_DATA=[
+["ccenterfax.eg@orange.com","Call Center 110","Egypt Call Center Fax"],
+["cs110postpaidsupervisors-eg@orange.com","Postpaid Supervisors","Egypt CC 110 Postpaid Supervisors"],
+["cs110prepaidspvs-eg@orange.com","Prepaid Supervisors","Egypt CC 110 Prepaid Supervisors"],
+["cs110postpaidteamleaders-eg@orange.com","Team Leaders Postpaid","Egypt CC 110 Postpaid Team Leaders"],
+["cs110prepaidteamleaders-eg@orange.com","Team Leaders Prepaid","Egypt CC 110 Prepaid Team Leaders"],
+["cs110postpaidsupport-eg@orange.com","Postpaid Assist Team","Egypt CC 110 Postpaid Support"],
+["cs110starcontrolsupport-eg@orange.com","Star Control Assist","Egypt CC 110 Star Control Support"],
+["cs110presupportteam-eg@orange.com","Prepaid Assist Team","Egypt CC 110 Prepaid Support Team"],
+["csfcassistteam-eg@orange.com","First Class Assist","Egypt CC FC Assist Team"],
+["csfcbackoffice-eg@orange.com","First class back office","Egypt CC FC Back Office"],
+["csfcoutbound-eg@orange.com","FC outbound Team","Egypt CC FC Outbound"],
+["csprepaidfcteam-eg@orange.com","Prepaid FC Team","Egypt CC Prepaid FC Team"],
+["postpaidcomplainthandling-eg@orange.com","Complaint Handling Postpaid","Egypt Postpaid Complaint Handling"],
+["prepaidcomplainthandling-eg@orange.com","Complaint Handling Prepaid","Egypt Prepaid Complaint Handling"],
+["pactmanagement-eg@orange.com","Personal Activation & Customer Information","Egypt PAct Management"],
+["postpaidsaveteam.eg@orange.com","Postpaid Save and Retention MNP","Egypt CC Postpaid Retention MNP"],
+["csprepaidmnp-eg@orange.com","Prepaid MNP / Prepaid Loyalty","Egypt CC Prepaid MNP"],
+["csdatacomplaints-eg@orange.com","Data Team","Egypt CC Data Complaints"],
+["cspostpaidloyaltyteam-eg@orange.com","Postpaid loyalty","Egypt CC Enterprise Loyalty"],
+["telcofraud-eg@orange.com","Fraud","Egypt Telco Fraud"],
+["crmadministration-eg@orange.com","CRM Admin","Egypt CRM Administration"],
+["nladgsegmentteam-eg@orange.com","Data gathering assist","Egypt NLA-DG Segment Team"],
+["csdg-nlateamleader-eg@orange.com","DG & NLA Team Leader","Egypt CC DG-NLA Team Leader"],
+["wfmadherenceteam-eg@orange.com","WFM Adherence","Egypt WFM Adherence Team"],
+["wfmforecastschteam-eg@orange.com","WFM Forecast","Egypt WFM Forecast & Schedule Team"],
+["wfmrtmteam-eg@orange.com","WFM RTM Team","Egypt WFM RTM Team"],
+["cs6060teamleaders-eg@orange.com","Team Leaders 6060","Egypt CC 6060 Team Leaders"],
+["coreroaming-eg@orange.com","Team Leaders (Core Roaming) 6060","Egypt Core Roaming"],
+["csprepaidsimswap-eg@orange.com","Prepaid Sim Swap","Egypt CC Prepaid Sim Swap"],
+["cs250teamleaders-eg@orange.com","Team Leaders 250","Egypt CC 250 Team Leaders"],
+["cs250supportteam-eg@orange.com","Support Team 250","Egypt CC 250 Support Team"],
+["faxinationusers-eg@orange.com","Corp Faxation (Hunt: 2577)","Egypt Faxination Users"],
+["cscorporatecustomersupport-eg@orange.com","Corp. Complain handling (250 tech)","Egypt CCCorporate Customer Support"],
+["entfirstclass-eg@orange.com","Enterprise First Class","Egypt Ent First Class"],
+["entfcbo-eg@orange.com","Enterprise First Class Back Office","Egypt Ent First Class Back Office"],
+["fbb-dsl-assist-eg@orange.com","DSL Assist Team","Egypt FBB-DSL Assist Team"],
+["newrssteam-eg@orange.com","Team RSS","Egypt New RSS Team"]
+];
+function renderEmails(){
+document.getElementById("emailList").innerHTML=EMAILS_DATA.map(([em,n,d])=>`<div style="padding:8px 0;border-bottom:1px solid #f1e4d6"><b>${safe(n)}</b><div class="note" style="margin:2px 0">${safe(d)}</div><div style="display:flex;gap:8px;align-items:center;margin-top:4px"><code dir="ltr" style="flex:1;color:#e66b00;word-break:break-all;font-size:12px">${safe(em)}</code><button class="btn secondary" style="padding:4px 10px" onclick="copyText('${em}')">نسخ</button><a class="btn" style="padding:4px 10px;text-decoration:none" href="mailto:${em}">رسالة</a></div></div>`).join("");
 }
 function renderHunts(){
 document.getElementById("huntList").innerHTML=HUNTS_DATA.map(([g,rows])=>`<h4 style="margin:10px 0 6px;color:#e66b00">${safe(g)}</h4>`+rows.map(([n,num])=>`<div class="stat-bottom" style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #f1e4d6"><span>${safe(n)}</span><b dir="ltr" onclick="copyText('${num}')" style="cursor:pointer">${num}</b></div>`).join("")).join("");
