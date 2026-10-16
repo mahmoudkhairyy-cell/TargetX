@@ -350,7 +350,8 @@ h1,h2,h3,h4,button,input,select{font-family:"Cairo","Segoe UI",Tahoma,Arial,sans
     </div>
   </div>
   <div class="rh-stats">
-    <div class="rh-stat" style="grid-column:1/-1"><div class="rh-stat-l">الخطوط المحققة 📱</div><div class="rh-stat-v" id="lineDone">0</div><div class="rh-stat-s">خط تم تسجيله هذا الشهر</div></div>
+    <div class="rh-stat"><div class="rh-stat-l">العدد 📱</div><div class="rh-stat-v" id="lineDone">0</div><div class="rh-stat-s">خط محقق من <span id="lineTarget">0</span></div></div>
+    <div class="rh-stat"><div class="rh-stat-l">الوزن ⚖️</div><div class="rh-stat-v"><span id="weightTop">100</span>%</div><div class="rh-stat-s">مجموع أوزان المؤشرات</div></div>
   </div>
   <div class="rh-sec-title">مؤشرات الأداء</div>
   <div id="kpiGrid" class="rh-kpis"></div>
@@ -696,6 +697,7 @@ function renderHome(){
  set("employeeGreeting", state.settings.employee||"—");
  set("branchName2", "📍 "+(state.settings.branch||""));
  set("weightTotal", fmt(overall.weights.total));
+ set("weightTop", fmt(overall.weights.total));
  set("mascotMessage",
   lp>=100?"يا وحش! خلصت تارجت الخطوط 🏆":
   lp>=70?"إنت قريب أوي! فاضل شوية 💪":
